@@ -4,6 +4,10 @@ class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
 }
 
-actual fun getPlatform(): Platform = AndroidPlatform()
-actual fun nfc_id():Long = nfc_tag()
+actual fun getPlatform(): Platform {
+    return AndroidPlatform()
+}
+actual fun nfc_id():Long {
+    return nfc_tag()
+}
 
