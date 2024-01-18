@@ -1,30 +1,18 @@
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.FlowPreview
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+
 
 @OptIn(ExperimentalResourceApi::class, FlowPreview::class)
 @Composable
 fun App() {
     MaterialTheme {
-        layout.landing_page()
+        val windowSizeClass = calculateWindowSizeClass(this)
 
-//        var showContent by remember { mutableStateOf(false) }
-//        val greeting = remember { Greeting().greet() }
-//        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-//            Button(onClick = { showContent = !showContent }) {
-//                Text("Click me!")
-//            }
-//            AnimatedVisibility(showContent) {
-//                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-//                    Image(painterResource("compose-multiplatform.xml"), null)
-//                    Text("Compose: $greeting")
-//                    test()
-//                    nfc_id()
-//                }
-//            }
-//
-//        }
+        layout.mainWindow(windowSizeClass)
     }
 }

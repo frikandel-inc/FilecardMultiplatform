@@ -31,7 +31,8 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
@@ -86,6 +87,12 @@ android {
         implementation("com.github.romellfudi:FudiNFC:android-12-1.1.0")
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+dependencies {
+    implementation(libs.androidx.material3.window.size.class)
+    implementation(libs.androidx.material3.window.size.class)
+    implementation(libs.androidx.material3.window.size.class)
+    implementation(libs.androidx.material3.window.size.class)
 }
 
 compose.desktop {
