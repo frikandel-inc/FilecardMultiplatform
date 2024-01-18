@@ -1,3 +1,4 @@
+
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
@@ -22,7 +23,7 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
@@ -42,13 +43,23 @@ kotlin {
     }
 }
 
+
 android {
+        repositories {
+            maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+            google()
+            gradlePluginPortal()
+            mavenCentral()
+            maven ( url = "https://jitpack.io" )
+        }
+
     namespace = "com.filecard.multiplatform"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+
 
     defaultConfig {
         applicationId = "com.filecard.multiplatform"
@@ -72,6 +83,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     dependencies {
+        implementation("com.github.romellfudi:FudiNFC:android-12-1.1.0")
         debugImplementation(libs.compose.ui.tooling)
     }
 }

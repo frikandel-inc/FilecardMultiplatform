@@ -29,8 +29,11 @@ fun App() {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(painterResource("compose-multiplatform.xml"), null)
                     Text("Compose: $greeting")
+                    test()
+                    nfc_id()
                 }
             }
+
         }
     }
 }

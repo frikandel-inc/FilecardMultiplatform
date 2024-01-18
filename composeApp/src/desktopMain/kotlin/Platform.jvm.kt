@@ -3,3 +3,5 @@ class JVMPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = JVMPlatform()
+
+actual fun nfc_id() = 1L

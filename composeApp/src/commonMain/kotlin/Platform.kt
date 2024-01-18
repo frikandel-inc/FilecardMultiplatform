@@ -3,3 +3,4 @@ interface Platform {
 }
 
 expect fun getPlatform(): Platform
+expect fun nfc_id(): Long
