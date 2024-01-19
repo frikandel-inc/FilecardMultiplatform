@@ -41,7 +41,6 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.coroutines.core)
-            implementation("io.ktor:ktor-client-cio:2.3.7")
             implementation("io.ktor:ktor-client-logging:2.3.7")
             implementation("io.ktor:ktor-client-auth:2.3.7")
 
