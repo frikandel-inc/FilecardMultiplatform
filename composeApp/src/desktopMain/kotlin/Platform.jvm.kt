@@ -4,4 +4,15 @@ class JVMPlatform: Platform {
 
 actual fun getPlatform(): Platform = JVMPlatform()
 
-actual fun nfc_id() = 1L
+private class AndroidNfcManager(): NfcInterface {
+
+
+    override    fun listen(data: String,callback: (String) -> Unit) {
+
+    }
+    override fun quit():String {
+        return "quit"
+    }
+}
+
+actual fun CommenNfcManager(): NfcInterface = AndroidNfcManager()

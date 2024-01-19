@@ -81,12 +81,14 @@ fun landingPage() {
 fun HomeScreen(modifier: Modifier = Modifier) {
     Column(modifier) {
         Spacer(Modifier.height(16.dp))
-        HomeSection(title = "R.string.favorite_collections") {
-            FavoriteCollectionsGrid()
+        HomeSection(title = "title") {
+            Text("test")
         }
         Spacer(Modifier.height(16.dp))
+
     }
 }
+
 @Composable
 fun HomeSection(
     title: String,
@@ -197,7 +199,7 @@ fun FavoriteCollectionCard(
             modifier = Modifier.width(255.dp)
         ) {
             Image(
-                painter = painterResource(drawable),
+                painter = painterResource(drawable.toString()),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(80.dp)
