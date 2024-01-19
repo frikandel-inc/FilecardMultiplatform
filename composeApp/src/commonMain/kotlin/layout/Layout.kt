@@ -29,8 +29,6 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,21 +41,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.FlowPreview
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+
 
 
 @Composable
 @FlowPreview
-fun mainWindow(windowSizeClass:WindowSizeClass) {
-    when (windowSize.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> {
-            MySootheAppPortrait()
-        }
-        WindowWidthSizeClass.Expanded -> {
+fun mainWindow() {
+//    when (windowSize.widthSizeClass) {
+//        WindowWidthSizeClass.Compact -> {
+//            MySootheAppPortrait()
+//        }
+//        WindowWidthSizeClass.Expanded -> {
             MySootheAppLandscape()
-        }
-    }
+//        }
+//    }
 
 }
 
@@ -186,7 +183,7 @@ fun MySootheAppPortrait() {
 
 @Composable
 fun FavoriteCollectionCard(
-    drawable: String,
+    drawable: Int,
     text: String,
     modifier: Modifier = Modifier
 ) {

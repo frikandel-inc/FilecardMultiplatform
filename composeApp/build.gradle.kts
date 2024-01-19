@@ -22,7 +22,6 @@ kotlin {
 
     
     sourceSets {
-        val desktopMain by getting
 
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
@@ -36,7 +35,10 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+
         }
+        val desktopMain by getting
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             
@@ -89,10 +91,6 @@ android {
     }
 }
 dependencies {
-    implementation(libs.androidx.material3.window.size.class)
-    implementation(libs.androidx.material3.window.size.class)
-    implementation(libs.androidx.material3.window.size.class)
-    implementation(libs.androidx.material3.window.size.class)
 }
 
 compose.desktop {
