@@ -2,7 +2,6 @@
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.FlowPreview
-import layout.mainWindow
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 
@@ -10,6 +9,6 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 @Composable
 fun App() {
     MaterialTheme {
-        mainWindow()
+//        mainWindow()
     }
 }

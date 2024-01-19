@@ -26,6 +26,9 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+
+
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -91,8 +94,18 @@ android {
     }
 }
 dependencies {
+    implementation("org.apache.commons:commons-lang3:3.5")
+    implementation(files("C:\\Users\\lenna\\IdeaProjects\\FilecardMultiplatform\\composeApp\\libs\\st25sdk-1.10.0.jar"))
+    implementation(files("C:\\Users\\lenna\\IdeaProjects\\FilecardMultiplatform\\composeApp\\libs\\st25_android_reader_interface.aar"))
 }
 
+repositories{
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    google()
+    gradlePluginPortal()
+    mavenCentral()
+    maven ( url = "https://jitpack.io" )
+}
 compose.desktop {
     application {
         mainClass = "MainKt"

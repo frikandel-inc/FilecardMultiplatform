@@ -1,8 +1,10 @@
+
+
 interface Platform {
     val name: String
 }
 interface NfcInterface {
-    fun listen(data: String,callback: (String) -> Unit)
+    fun listen()
     fun quit():String
 }
 

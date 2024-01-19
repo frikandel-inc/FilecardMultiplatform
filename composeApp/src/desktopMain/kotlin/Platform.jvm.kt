@@ -7,7 +7,7 @@ actual fun getPlatform(): Platform = JVMPlatform()
 private class AndroidNfcManager(): NfcInterface {
 
 
-    override    fun listen(data: String,callback: (String) -> Unit) {
+    override fun listen() {
 
     }
     override fun quit():String {
