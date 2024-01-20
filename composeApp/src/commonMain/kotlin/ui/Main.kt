@@ -14,12 +14,12 @@ import ui.Expanded.HomeScreenExpanded
 fun Window(NfcId: Long) {
     val windowSize = calculateWindowSizeClass().widthSizeClass
     if(windowSize.toString() == WindowWidthSizeClass.Expanded.toString()) {
-        HomeScreenExpanded()
+        HomeScreenExpanded(NfcId)
     }
     if ( windowSize.toString() == WindowWidthSizeClass.Medium.toString()) {
-        HomeScreenExpanded()
+        HomeScreenExpanded(NfcId)
     }
     if ( windowSize.toString() == WindowWidthSizeClass.Compact.toString()) {
-        HomeScreenCompact()
+        HomeScreenCompact(NfcId)
     }
 }

@@ -9,6 +9,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 
 
 //class test : TagDiscovery.onTagDiscoveryCompletedListener {}
@@ -116,9 +118,8 @@ class MainActivity : ComponentActivity()  {
 }
 
 
-
-//@Preview
-//@Composable
-//fun AppAndroidPreview() {
-//    App()
-//}
+@Preview
+@Composable
+fun AppAndroidPreview() {
+    App(0L)
+}

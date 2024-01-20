@@ -12,7 +12,6 @@ import ui.Window
 @Composable
 fun App(NfcId:Long) {
     MaterialTheme {
-
         Window(NfcId)
     }
 }
