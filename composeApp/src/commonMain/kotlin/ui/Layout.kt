@@ -1,4 +1,4 @@
-package layout
+package ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,22 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.FlowPreview
-
-
-
-@Composable
-@FlowPreview
-fun mainWindow() {
-//    when (windowSize.widthSizeClass) {
-//        WindowWidthSizeClass.Compact -> {
-//            MySootheAppPortrait()
-//        }
-//        WindowWidthSizeClass.Expanded -> {
-            MySootheAppLandscape()
-//        }
-//    }
-
-}
 
 @Composable
 @FlowPreview

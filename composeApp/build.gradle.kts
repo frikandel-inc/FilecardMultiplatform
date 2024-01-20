@@ -7,6 +7,17 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
 }
+//repositories{
+//    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+//    google()
+//    gradlePluginPortal()
+//    mavenCentral()
+//    maven ( url = "https://jitpack.io" )
+//}
+
+dependencies {
+    implementation("org.apache.commons:commons-lang3:3.5")
+}
 
 kotlin {
     androidTarget {
@@ -16,19 +27,11 @@ kotlin {
             }
         }
     }
-    
     jvm("desktop")
-
-
-    
     sourceSets {
-
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-
-
-
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -38,13 +41,14 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
+            implementation("com.arkivanov.decompose:decompose:2.2.2")
+
 
         }
         val desktopMain by getting
-
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-            
         }
     }
 }
@@ -93,19 +97,7 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
-dependencies {
-    implementation("org.apache.commons:commons-lang3:3.5")
-    implementation(files("C:\\Users\\lenna\\IdeaProjects\\FilecardMultiplatform\\composeApp\\libs\\st25sdk-1.10.0.jar"))
-    implementation(files("C:\\Users\\lenna\\IdeaProjects\\FilecardMultiplatform\\composeApp\\libs\\st25_android_reader_interface.aar"))
-}
 
-repositories{
-    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    google()
-    gradlePluginPortal()
-    mavenCentral()
-    maven ( url = "https://jitpack.io" )
-}
 compose.desktop {
     application {
         mainClass = "MainKt"
