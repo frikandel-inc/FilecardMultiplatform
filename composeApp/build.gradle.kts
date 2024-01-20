@@ -39,9 +39,11 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+
             implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.coroutines.core)
             implementation("io.ktor:ktor-client-logging:2.3.7")
+            implementation("org.jetbrains.kotlinx:kotlinx-io:0.1.16")
             implementation("io.ktor:ktor-client-auth:2.3.7")
 
 
@@ -50,6 +52,7 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
+            implementation("commons-net:commons-net:3.8.0")
             
         }
     }
