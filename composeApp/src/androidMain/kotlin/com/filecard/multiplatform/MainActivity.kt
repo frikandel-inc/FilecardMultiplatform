@@ -4,11 +4,8 @@ import App
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
-import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.nfc.Tag
-import android.nfc.tech.Ndef
-import android.nfc.tech.NdefFormatable
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -128,7 +125,10 @@ import androidx.compose.runtime.setValue
 //fun AppAndroidPreview() {
 //    App({ 0L })
 //}
-
+var status by mutableStateOf(0L)
+fun readstatus(): Long {
+    return status
+}
 class MainActivity : ComponentActivity() {
     private lateinit var pendingIntent: PendingIntent
 
@@ -140,14 +140,6 @@ class MainActivity : ComponentActivity() {
         IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED, "text/plain")
     )
 
-    private val writeFilters = emptyArray<IntentFilter>()
-
-    private val writeTechList =
-        arrayOf(arrayOf(Ndef::class.java.name), arrayOf(NdefFormatable::class.java.name))
-
-    private var messageToWrite: NdefMessage? = null
-
-    private var status by mutableStateOf(0L)
     private var input by mutableStateOf("")
 
     private fun intentFlags() =
@@ -169,23 +161,7 @@ class MainActivity : ComponentActivity() {
             )
 
         setContent {
-//            val statusLong = try {
-//                if (status.isNotEmpty()) {
-//                    status.toLong()
-//                } else {
-//                    // Handle the case when 'status' is empty
-//                    // In this example, using 0L as a default value
-//                    0L
-//                }
-//            } catch (e: NumberFormatException) {
-//                // Handle the case when 'status' cannot be converted to Long
-//                // In this example, using 0L as a default value
-//                0L
-//            }
-            App( status )
-
-            // haal niet weg anders werkt het niet!!
-
+            App()
         }
     }
 
@@ -193,14 +169,13 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         if (NfcAdapter.getDefaultAdapter(this@MainActivity) != null) {
 
-            NfcAdapter.getDefaultAdapter(this@MainActivity).enableForegroundDispatch(this@MainActivity, pendingIntent, readFilters, null)
+            NfcAdapter.getDefaultAdapter(this@MainActivity).enableForegroundDispatch(this@MainActivity, pendingIntent, null, null)
         }
     }
 
     override fun onPause() {
         if (NfcAdapter.getDefaultAdapter(this@MainActivity) != null) {
-
-            NfcAdapter.getDefaultAdapter(this@MainActivity).enableForegroundDispatch(this@MainActivity, pendingIntent, readFilters, null)
+            NfcAdapter.getDefaultAdapter(this@MainActivity).enableForegroundDispatch(this@MainActivity, pendingIntent, null, null)
         }
         super.onPause()
     }

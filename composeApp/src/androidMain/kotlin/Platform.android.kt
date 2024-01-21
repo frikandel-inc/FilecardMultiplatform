@@ -1,4 +1,6 @@
 import android.os.Build
+import com.filecard.multiplatform.MainActivity
+import com.filecard.multiplatform.readstatus
 
 
 class AndroidPlatform : Platform {
@@ -7,4 +9,8 @@ class AndroidPlatform : Platform {
 
 actual fun getPlatform(): Platform {
     return AndroidPlatform()
+}
+
+actual suspend fun nfccommunication(): Long {
+    return readstatus()
 }

@@ -4,3 +4,7 @@ class JVMPlatform: Platform {
 
 actual fun getPlatform(): Platform = JVMPlatform()
 
+actual suspend fun nfccommunication(): Long {
+    val nfc = Nfc.NfcCommunication()
+    return nfc.getSerial()
+}

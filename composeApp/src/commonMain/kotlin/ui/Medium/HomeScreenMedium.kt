@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import ui.Expanded.HomeScreenExpanded
 
 @Composable
-fun HomeScreenMedium(NfcId: Long) {
+fun HomeScreenMedium() {
     Row {
-        HomeScreenExpanded( NfcId )
+        HomeScreenExpanded()
     }
 }

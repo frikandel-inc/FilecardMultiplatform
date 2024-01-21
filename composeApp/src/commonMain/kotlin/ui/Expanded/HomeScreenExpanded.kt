@@ -6,18 +6,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import nfccommunication
 
 @Composable
-fun HomeScreenExpanded(NfcId: Long) {
+fun HomeScreenExpanded() {
     Row {
         HomeAppBarExpanded()
-            HomeMainExpanded(NfcId)
+            HomeMainExpanded()
 
     }
 }
 @Composable
-fun HomeMainExpanded(NfcId: Long){
+fun HomeMainExpanded(){
+    var message by remember { mutableStateOf("") }
+    LaunchedEffect(true) {
+        // Assuming nfccommunication() returns a String
+        message = nfccommunication().toString()
+    }
     Column {
         Text(
             text = "Expanded",
@@ -26,7 +37,7 @@ fun HomeMainExpanded(NfcId: Long){
         )
 
         Text(
-            text = NfcId.toString(),
+            text = message,
             style = MaterialTheme.typography.titleMedium,
             modifier = androidx.compose.ui.Modifier.padding(16.dp)
         )
