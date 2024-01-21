@@ -1,4 +1,4 @@
-rootProject.name = "Filecard"
+rootProject.name = "FilecardMultiplatform"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

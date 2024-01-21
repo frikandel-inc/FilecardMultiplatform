@@ -8,10 +8,6 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
 }
 
-dependencies {
-    implementation("org.apache.commons:commons-lang3:3.5")
-}
-
 kotlin {
     androidTarget {
         compilations.all {
@@ -74,7 +70,7 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
         }
     }
     compileOptions {
@@ -82,7 +78,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     dependencies {
-        implementation("com.github.romellfudi:FudiNFC:android-12-1.1.0")
         debugImplementation(libs.compose.ui.tooling)
     }
 }
