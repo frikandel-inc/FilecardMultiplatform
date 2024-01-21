@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ui.Shared.getNfcId
 
 @Composable
@@ -46,8 +47,10 @@ fun HomeMainExpanded(){
         )
         Button(
             onClick = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    message = getNfcId()
+                CoroutineScope(Dispatchers.Default).launch {
+                    withContext(context = Dispatchers.IO) {
+                        message = getNfcId()
+                    }
                 }
             }
         ){

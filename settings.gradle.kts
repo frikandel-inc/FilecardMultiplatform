@@ -8,10 +8,7 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
         maven ( url = "https://jitpack.io" )
-
     }
 }
-
-
 
 include(":composeApp")
