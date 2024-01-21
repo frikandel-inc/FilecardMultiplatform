@@ -3,9 +3,9 @@ package ui.Expanded
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,6 +33,7 @@ fun HomeMainExpanded(){
     LaunchedEffect(key1 = Unit) {
         message = getNfcId()
     }
+
     Column {
         Text(
             text = "Expanded",
@@ -45,7 +46,7 @@ fun HomeMainExpanded(){
             style = MaterialTheme.typography.titleMedium,
             modifier = androidx.compose.ui.Modifier.padding(16.dp)
         )
-        Button(
+        TextButton(
             onClick = {
                 CoroutineScope(Dispatchers.Default).launch {
                     withContext(context = Dispatchers.IO) {
@@ -54,8 +55,9 @@ fun HomeMainExpanded(){
                 }
             }
         ){
-            Text("Button")
+            Text("Scan NFC")
         }
+
     }
 
 }
