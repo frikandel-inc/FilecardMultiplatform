@@ -1,5 +1,6 @@
 package serverutil
 
+import kotlinx.coroutines.*
 import org.apache.commons.net.ftp.FTP
 import java.io.FileInputStream
 import org.apache.commons.net.ftp.FTPClient
@@ -13,9 +14,11 @@ class FtpClientJvm : FtpClientCommon{
         autodetectUTF8 = true
     }
 
-    override fun connect(host: String, port: Int) {
-        client.connect(host, port)
-        client.setRemoteVerificationEnabled(false)
+    override suspend fun connect(host: String, port: Int) {
+        withContext(Dispatchers.IO) {
+            client.connect(host, port)
+            client.setRemoteVerificationEnabled(false)
+        }
     }
 
     override var implicit: Boolean = false
@@ -35,10 +38,12 @@ class FtpClientJvm : FtpClientCommon{
 
     private var supportsMlsCommands = false
 
-    override fun login(user: String, password: String) {
-        client.login(user, password)
-        client.setFileType(FTP.BINARY_FILE_TYPE)
-        supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
+    override suspend fun login(user: String, password: String) {
+        withContext(Dispatchers.IO) {
+            client.login(user, password)
+            client.setFileType(FTP.BINARY_FILE_TYPE)
+            supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
+        }
     }
 
     override val isConnected: Boolean
@@ -46,47 +51,55 @@ class FtpClientJvm : FtpClientCommon{
     override var privateData: Boolean = false
 
 
-    override fun downloadFile(remoteFile: String, localFile: String): Boolean{
-        try {
+    override suspend fun downloadFile(remoteFile: String, localFile: String): Boolean {
+        withContext(Dispatchers.IO) {
             val outputStream = FileOutputStream(localFile)
-            return  client.retrieveFile(remoteFile, outputStream)
-        } finally {
             client.logout()
             client.disconnect()
+            return client.retrieveFile(remoteFile, outputStream)
         }
     }
+
     
-    override fun uploadFile(localFile: String, remoteFile: String): Boolean {
-        try {
-            val inputStream = FileInputStream(localFile)
-            return client.storeFile(remoteFile, inputStream)
-        } finally {
-            client.logout()
-            client.disconnect()
+    override suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
+        withContext(context = Dispatchers.IO) {
+            try {
+                val inputStream = FileInputStream(localFile)
+                return client.storeFile(remoteFile, inputStream)
+            } finally {
+                client.logout()
+                client.disconnect()
+            }
         }
     }
 
-    override fun mkdir(path: String): Boolean {
-        return client.makeDirectory(path)
+    override suspend fun mkdir(path: String): Boolean {
+        withContext(Dispatchers.IO) {
+            return client.makeDirectory(path)
+        }
     }
 
-    override fun deleteFile(path: String): Boolean {
-        return client.deleteFile(path)
+    override suspend fun deleteFile(path: String): Boolean {
+        withContext(Dispatchers.IO) {
+            return client.deleteFile(path)
+        }
     }
 
-    override fun deleteDir(path: String): Boolean {
+    override suspend fun deleteDir(path: String): Boolean {
+        withContext(Dispatchers.IO) {
         return client.removeDirectory(path)
+            }
     }
 
-    override fun rename(old: String, new: String): Boolean {
+    override suspend fun rename(old: String, new: String): Boolean {
         return client.rename(old, new)
     }
 
-    override fun list(path: String?): List<File> {
+    override suspend fun list(path: String?): List<File> {
         return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
     }
 
-    override fun file(path: String): File {
+    override suspend fun file(path: String): File {
         if (!supportsMlsCommands) {
             // TODO improve this
             throw IllegalStateException("server does not support MLST command")
@@ -94,7 +107,7 @@ class FtpClientJvm : FtpClientCommon{
         return File(client.mlistFile(path))
     }
 
-    override fun exit(): Boolean {
+    override suspend fun exit(): Boolean {
         if (!client.logout()) {
             return false
         }

@@ -31,6 +31,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
+            implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
             implementation("commons-net:commons-net:3.8.0")
         }
         commonMain.dependencies {
@@ -50,6 +51,7 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jvm:1.7.3")
             implementation("commons-net:commons-net:3.8.0")
             
         }
@@ -88,6 +90,9 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+dependencies {
+    implementation(libs.androidx.appcompat)
 }
 
 

@@ -7,6 +7,8 @@ import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPCmd
 import org.apache.commons.net.ftp.FTPFile
 import serverutil.FTPFile as File
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 //dit is gewoon een kopie van FtpClientJvm uit desktopMain
@@ -15,9 +17,9 @@ class FtpClientAndroid : FtpClientCommon{
         autodetectUTF8 = true
     }
 
-    override fun connect(host: String, port: Int) {
-        client.connect(host, port)
+    override suspend fun connect(host: String, port: Int) {
         client.setRemoteVerificationEnabled(false)
+        client.connect(host, port)
     }
 
     override var implicit: Boolean = false
@@ -37,7 +39,7 @@ class FtpClientAndroid : FtpClientCommon{
 
     private var supportsMlsCommands = false
 
-    override fun login(user: String, password: String) {
+    override suspend fun login(user: String, password: String) {
         client.login(user, password)
         client.setFileType(FTP.BINARY_FILE_TYPE)
         supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
@@ -48,17 +50,13 @@ class FtpClientAndroid : FtpClientCommon{
     override var privateData: Boolean = false
 
 
-    override fun downloadFile(remoteFile: String, localFile: String): Boolean{
-        try {
-            val outputStream = FileOutputStream(localFile)
-            return  client.retrieveFile(remoteFile, outputStream)
-        } finally {
-            client.logout()
-            client.disconnect()
-        }
+    override suspend fun downloadFile(remoteFile: String, localFile: String): Boolean{
+        val outputStream = FileOutputStream(localFile)
+        return client.retrieveFile(remoteFile, outputStream)
+
     }
 
-    override fun uploadFile(localFile: String, remoteFile: String): Boolean {
+    override suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
         try {
             val inputStream = FileInputStream(localFile)
             return client.storeFile(remoteFile, inputStream)
@@ -68,27 +66,27 @@ class FtpClientAndroid : FtpClientCommon{
         }
     }
 
-    override fun mkdir(path: String): Boolean {
+    override suspend fun mkdir(path: String): Boolean {
         return client.makeDirectory(path)
     }
 
-    override fun deleteFile(path: String): Boolean {
+    override suspend fun deleteFile(path: String): Boolean {
         return client.deleteFile(path)
     }
 
-    override fun deleteDir(path: String): Boolean {
+    override suspend fun deleteDir(path: String): Boolean {
         return client.removeDirectory(path)
     }
 
-    override fun rename(old: String, new: String): Boolean {
+    override suspend fun rename(old: String, new: String): Boolean {
         return client.rename(old, new)
     }
 
-    override fun list(path: String?): List<File> {
+    override suspend fun list(path: String?): List<File> {
         return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
     }
 
-    override fun file(path: String): File {
+    override suspend fun file(path: String): File {
         if (!supportsMlsCommands) {
             // TODO improve this
             throw IllegalStateException("server does not support MLST command")
@@ -96,7 +94,7 @@ class FtpClientAndroid : FtpClientCommon{
         return File(client.mlistFile(path))
     }
 
-    override fun exit(): Boolean {
+    override suspend fun exit(): Boolean {
         if (!client.logout()) {
             return false
         }
