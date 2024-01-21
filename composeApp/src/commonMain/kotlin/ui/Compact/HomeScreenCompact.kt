@@ -9,6 +9,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ui.Shared.getNfcId
 
 @Composable
@@ -38,10 +41,15 @@ fun HomeMainCompact(){
         )
 
         Button(
-            onClick = { message = getNfcId() }
+            onClick = {
+                CoroutineScope(Dispatchers.Main).launch {
+                message = getNfcId()
+                }
+            }
         ){
             Text("Button")
         }
     }
 
 }
+

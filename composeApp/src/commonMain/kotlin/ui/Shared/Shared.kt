@@ -5,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import nfccommunication
 
-fun getNfcId():String {
+suspend fun getNfcId():String {
     var message = ""
     runBlocking {
         withContext(context = Dispatchers.IO) {
