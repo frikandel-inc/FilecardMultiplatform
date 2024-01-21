@@ -4,7 +4,7 @@ import io.ktor.utils.io.core.*
 import serverutil.FTPFile as File
 
 
-expect class FtpClient {
+interface FtpClientCommon {
     fun connect(host: String, port: Int)
     var implicit: Boolean
     var utf8: Boolean
@@ -12,8 +12,8 @@ expect class FtpClient {
     fun login(user: String, password: String)
     val isConnected: Boolean
     var privateData: Boolean
-    fun downloadFile(server: String, ftpuser: String, pass: String, remoteFile: String, localFile: String): Boolean
-    fun uploadFile(server: String, ftpuser: String, pass: String, localFile: String, remoteFile: String): Boolean
+    fun downloadFile(remoteFile: String, localFile: String): Boolean
+    fun uploadFile(localFile: String, remoteFile: String): Boolean
     fun mkdir(path: String): Boolean
     fun deleteFile(path: String): Boolean
     fun deleteDir(path: String): Boolean

@@ -1,34 +1,118 @@
 package serverutil
 
 import java.io.FileInputStream
-import org.apache.commons.net.ftp.FTPClient
 import java.io.FileOutputStream
+import org.apache.commons.net.ftp.FTP
+import org.apache.commons.net.ftp.FTPClient
+import org.apache.commons.net.ftp.FTPCmd
+import org.apache.commons.net.ftp.FTPFile
+import serverutil.FTPFile as File
 
-actual class FtpClient {
-    actual fun downloadFile(server: String, user: String, pass: String, remoteFile: String, localFile: String): Boolean {
-        val ftpClient = FTPClient()
+
+//dit is gewoon een kopie van FtpClientJvm uit desktopMain
+class FtpClientAndroid : FtpClientCommon{
+    private val client: FTPClient = FTPClient().apply {
+        autodetectUTF8 = true
+    }
+
+    override fun connect(host: String, port: Int) {
+        client.connect(host, port)
+        client.setRemoteVerificationEnabled(false)
+    }
+
+    override var implicit: Boolean = false
+
+    override var utf8: Boolean = false
+        set(value) {
+            if (value) client.controlEncoding = "UTF-8"
+            field = value
+        }
+
+    override var passive: Boolean = false
+        set(value) {
+            if (value) client.enterLocalPassiveMode()
+            else client.enterLocalActiveMode()
+            field = value
+        }
+
+    private var supportsMlsCommands = false
+
+    override fun login(user: String, password: String) {
+        client.login(user, password)
+        client.setFileType(FTP.BINARY_FILE_TYPE)
+        supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
+    }
+
+    override val isConnected: Boolean
+        get() = client.isConnected
+    override var privateData: Boolean = false
+
+
+    override fun downloadFile(remoteFile: String, localFile: String): Boolean{
         try {
-            ftpClient.connect(server)
-            ftpClient.login(user, pass)
             val outputStream = FileOutputStream(localFile)
-            return ftpClient.retrieveFile(remoteFile, outputStream)
+            return  client.retrieveFile(remoteFile, outputStream)
         } finally {
-            ftpClient.logout()
-            ftpClient.disconnect()
+            client.logout()
+            client.disconnect()
         }
     }
 
-    actual fun uploadFile(server: String, user: String, localFile: String, remoteFile: String): Boolean {
-        val ftpClient = FTPClient()
+    override fun uploadFile(localFile: String, remoteFile: String): Boolean {
         try {
-            ftpClient.connect(server, 21)
-            ftpClient.login(user, pass)
-            ftpClient.enterLocalPassiveMode() 
             val inputStream = FileInputStream(localFile)
-            return ftpClient.storeFile(remoteFile, inputStream) 
+            return client.storeFile(remoteFile, inputStream)
         } finally {
-            ftpClient.logout()
-            ftpClient.disconnect()
+            client.logout()
+            client.disconnect()
         }
     }
+
+    override fun mkdir(path: String): Boolean {
+        return client.makeDirectory(path)
+    }
+
+    override fun deleteFile(path: String): Boolean {
+        return client.deleteFile(path)
+    }
+
+    override fun deleteDir(path: String): Boolean {
+        return client.removeDirectory(path)
+    }
+
+    override fun rename(old: String, new: String): Boolean {
+        return client.rename(old, new)
+    }
+
+    override fun list(path: String?): List<File> {
+        return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
+    }
+
+    override fun file(path: String): File {
+        if (!supportsMlsCommands) {
+            // TODO improve this
+            throw IllegalStateException("server does not support MLST command")
+        }
+        return File(client.mlistFile(path))
+    }
+
+    override fun exit(): Boolean {
+        if (!client.logout()) {
+            return false
+        }
+        client.disconnect()
+        return true
+    }
+
+    companion object {
+        internal fun convertFiles(files: Array<FTPFile>): List<File> {
+            val result = ArrayList<File>()
+            files.forEach {
+                result.add(File(it))
+            }
+            return result
+        }
+    }
+
+
 }

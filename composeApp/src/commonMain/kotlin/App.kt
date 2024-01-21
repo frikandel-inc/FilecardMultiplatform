@@ -21,7 +21,7 @@ fun App() {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         val greeting = remember { Greeting().greet() }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End) {
             Button(onClick = { showContent = !showContent }) {
                 Text("Click me!")
             }
