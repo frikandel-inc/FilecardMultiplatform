@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeScreenExpanded(NfcId: () -> Long) {
+fun HomeScreenExpanded(NfcId: Long) {
     Row {
         HomeAppBarExpanded()
-            HomeMainExpanded(NfcId.invoke())
+            HomeMainExpanded(NfcId)
 
     }
 }

@@ -17,6 +17,7 @@ class NfcCommunication {
                     comPort.readBytes(readBuffer, readBuffer.size)
                     val message = String(readBuffer, StandardCharsets.US_ASCII).trim { it <= ' ' }
                     if (message != "Provide a Filecard") {
+                        println(message)
                         serialNumber = message.toLong()
                     }
 

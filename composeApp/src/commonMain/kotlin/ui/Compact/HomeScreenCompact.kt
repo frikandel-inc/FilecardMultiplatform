@@ -6,11 +6,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun HomeScreenCompact(NfcId: () -> Long) {
+fun HomeScreenCompact(NfcId: Long) {
     Column {
         HomeAppBarCompact(
             content = {
-            HomeMainCompact(NfcId.invoke())
+            HomeMainCompact(NfcId)
         }
         )
 
