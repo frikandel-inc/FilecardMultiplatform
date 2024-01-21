@@ -11,7 +11,7 @@ import ui.Expanded.HomeScreenExpanded
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 @FlowPreview
-fun Window(NfcId: Long) {
+fun Window(NfcId: () -> Long) {
     val windowSize = calculateWindowSizeClass().widthSizeClass
     if(windowSize.toString() == WindowWidthSizeClass.Expanded.toString()) {
         HomeScreenExpanded(NfcId)

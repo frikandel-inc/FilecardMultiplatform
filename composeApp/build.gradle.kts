@@ -7,13 +7,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
 }
-//repositories{
-//    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-//    google()
-//    gradlePluginPortal()
-//    mavenCentral()
-//    maven ( url = "https://jitpack.io" )
-//}
 
 dependencies {
     implementation("org.apache.commons:commons-lang3:3.5")
@@ -43,18 +36,14 @@ kotlin {
             implementation(compose.components.resources)
             implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
             implementation("com.arkivanov.decompose:decompose:2.2.2")
-
-
         }
         val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
-
         }
     }
 }
-
 
 android {
         repositories {
@@ -70,8 +59,6 @@ android {
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
-
 
     defaultConfig {
         applicationId = "com.filecard.multiplatform"
@@ -87,7 +74,7 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
         }
     }
     compileOptions {
@@ -106,7 +93,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.filecard.multiplatform"
+            packageName = "filecard"
             packageVersion = "1.0.0"
         }
     }

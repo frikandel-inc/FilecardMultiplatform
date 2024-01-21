@@ -7,6 +7,6 @@ import ui.Expanded.HomeScreenExpanded
 @Composable
 fun HomeScreenMedium(NfcId: Long) {
     Row {
-        HomeScreenExpanded(NfcId)
+        HomeScreenExpanded({ NfcId })
     }
 }

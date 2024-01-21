@@ -4,9 +4,7 @@ import com.fazecast.jSerialComm.SerialPort
 import java.nio.charset.StandardCharsets
 
 class NfcCommunication {
-
-
-    fun Getserial(): Long {
+    fun getSerial(): Long {
         val comPort: SerialPort = SerialPort.getCommPorts()[0]
         comPort.setBaudRate(115200)
         var serialNumber: Long = 0
@@ -39,7 +37,7 @@ class NfcCommunication {
         }
         return serialNumber
     }
-    fun GetserialFake(): Long {
+    fun getSerialFake(): Long {
         return 0L
     }
 }

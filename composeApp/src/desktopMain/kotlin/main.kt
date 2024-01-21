@@ -5,7 +5,7 @@ import androidx.compose.ui.window.application
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication, title = "Filecard") {
-        val NfcId: Long = Nfc.NfcCommunication().GetserialFake()
+        val NfcId: Long =  Nfc.NfcCommunication().getSerial()
         App(NfcId)
     }
 }
@@ -14,5 +14,5 @@ fun main() = application {
 @Preview
 @Composable
 fun AppDesktopPreview() {
-    App(0L)
+    App( 0L )
 }

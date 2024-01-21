@@ -26,19 +26,20 @@ fun HomeAppBarExpanded(){
                 },
                 selected = true,
                 label = { Text("Scan") },
-                onClick = {  }
+                onClick = { }
+            )
+
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Filled.Home,
+                        contentDescription = "Home"
+                    )
+                },
+                selected = true,
+                label = { Text("Home") },
+                onClick = { }
             )
         }
-        NavigationRailItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Filled.Home,
-                    contentDescription = "Home"
-                )
-            },
-            selected = true,
-            label = { Text("Home") },
-            onClick = {  }
-        )
     }
 }
