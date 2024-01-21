@@ -147,7 +147,7 @@ class MainActivity : ComponentActivity() {
 
     private var messageToWrite: NdefMessage? = null
 
-    private var status by mutableStateOf("")
+    private var status by mutableStateOf(0L)
     private var input by mutableStateOf("")
 
     private fun intentFlags() =
@@ -169,24 +169,23 @@ class MainActivity : ComponentActivity() {
             )
 
         setContent {
-            val statusLong = try {
-                if (status.isNotEmpty()) {
-                    status.toLong()
-                } else {
-                    // Handle the case when 'status' is empty
-                    // In this example, using 0L as a default value
-                    0L
-                }
-            } catch (e: NumberFormatException) {
-                // Handle the case when 'status' cannot be converted to Long
-                // In this example, using 0L as a default value
-                0L
-            }
-            App( statusLong )
+//            val statusLong = try {
+//                if (status.isNotEmpty()) {
+//                    status.toLong()
+//                } else {
+//                    // Handle the case when 'status' is empty
+//                    // In this example, using 0L as a default value
+//                    0L
+//                }
+//            } catch (e: NumberFormatException) {
+//                // Handle the case when 'status' cannot be converted to Long
+//                // In this example, using 0L as a default value
+//                0L
+//            }
+            App( status )
 
             // haal niet weg anders werkt het niet!!
-            if (status.isNotEmpty()) {
-            }
+
         }
     }
 
@@ -212,12 +211,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun readTag(intent: Intent) {
-        status = ""
         val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
         if (tag != null) {
-            status = tag.id.toString()
+            status = tag.id.toString().toLong()
         } else {
-            status = "No tag found"
+            status = 0L
         }
     }
 }

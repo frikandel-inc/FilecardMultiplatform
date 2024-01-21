@@ -9,7 +9,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
     ExperimentalMaterial3WindowSizeClassApi::class,
 )
 @Composable
-fun App(NfcId: Long ) {
+fun App(NfcId: Long) {
     MaterialTheme {
         ui.Window( NfcId )
     }
