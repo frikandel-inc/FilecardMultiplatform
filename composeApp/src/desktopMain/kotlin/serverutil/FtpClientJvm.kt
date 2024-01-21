@@ -15,10 +15,8 @@ class FtpClientJvm : FtpClientCommon{
     }
 
     override suspend fun connect(host: String, port: Int) {
-        withContext(Dispatchers.IO) {
-            client.connect(host, port)
-            client.setRemoteVerificationEnabled(false)
-        }
+        client.setRemoteVerificationEnabled(false)
+        client.connect(host, port)
     }
 
     override var implicit: Boolean = false
@@ -39,11 +37,9 @@ class FtpClientJvm : FtpClientCommon{
     private var supportsMlsCommands = false
 
     override suspend fun login(user: String, password: String) {
-        withContext(Dispatchers.IO) {
-            client.login(user, password)
-            client.setFileType(FTP.BINARY_FILE_TYPE)
-            supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
-        }
+        client.login(user, password)
+        client.setFileType(FTP.BINARY_FILE_TYPE)
+        supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
     }
 
     override val isConnected: Boolean
@@ -51,44 +47,32 @@ class FtpClientJvm : FtpClientCommon{
     override var privateData: Boolean = false
 
 
-    override suspend fun downloadFile(remoteFile: String, localFile: String): Boolean {
-        withContext(Dispatchers.IO) {
-            val outputStream = FileOutputStream(localFile)
-            client.logout()
-            client.disconnect()
-            return client.retrieveFile(remoteFile, outputStream)
-        }
+    override suspend fun downloadFile(remoteFile: String, localFile: String): Boolean{
+        val outputStream = FileOutputStream(localFile)
+        return client.retrieveFile(remoteFile, outputStream)
+
     }
 
-    
     override suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
-        withContext(context = Dispatchers.IO) {
-            try {
-                val inputStream = FileInputStream(localFile)
-                return client.storeFile(remoteFile, inputStream)
-            } finally {
-                client.logout()
-                client.disconnect()
-            }
+        try {
+            val inputStream = FileInputStream(localFile)
+            return client.storeFile(remoteFile, inputStream)
+        } finally {
+            client.logout()
+            client.disconnect()
         }
     }
 
     override suspend fun mkdir(path: String): Boolean {
-        withContext(Dispatchers.IO) {
-            return client.makeDirectory(path)
-        }
+        return client.makeDirectory(path)
     }
 
     override suspend fun deleteFile(path: String): Boolean {
-        withContext(Dispatchers.IO) {
-            return client.deleteFile(path)
-        }
+        return client.deleteFile(path)
     }
 
     override suspend fun deleteDir(path: String): Boolean {
-        withContext(Dispatchers.IO) {
         return client.removeDirectory(path)
-            }
     }
 
     override suspend fun rename(old: String, new: String): Boolean {

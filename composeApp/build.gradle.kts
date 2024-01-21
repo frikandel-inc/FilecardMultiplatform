@@ -51,7 +51,6 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jvm:1.7.3")
             implementation("commons-net:commons-net:3.8.0")
             
         }
