@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    kotlin("plugin.serialization") version "1.9.21"
 }
 
 kotlin {
@@ -32,6 +33,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
             implementation("com.arkivanov.decompose:decompose:2.2.2")
+            implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.1.4-compose-experimental")
         }
         val desktopMain by getting
         desktopMain.dependencies {

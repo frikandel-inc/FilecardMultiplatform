@@ -10,11 +10,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
+import com.arkivanov.decompose.retainedComponent
+import nav.RootComponent
 
 
 var status by mutableStateOf(0L)
@@ -34,7 +34,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val root = retainedComponent {
+            RootComponent(it)
+        }
         pendingIntent =
             PendingIntent.getActivity(
                 this, 0,
@@ -44,7 +46,7 @@ class MainActivity : ComponentActivity() {
             )
 
         setContent {
-            App()
+            App(root)
         }
     }
 
@@ -89,8 +91,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
-}
+//@Preview
+//@Composable
+//fun AppAndroidPreview() {
+//    App(root)
+//}

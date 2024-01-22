@@ -5,10 +5,15 @@ import java.nio.charset.StandardCharsets
 
 class NfcCommunication {
     fun getSerial(): Long {
-        val comPort: SerialPort = SerialPort.getCommPorts()[0]
-        comPort.setBaudRate(115200)
         var serialNumber: Long = 0
+        var comPort: SerialPort = SerialPort.getCommPort("COM3")
         try {
+            comPort = SerialPort.getCommPorts()[0]
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        try {
+            comPort.setBaudRate(115200)
             comPort.openPort()
             println("Serial port opened")
             while (serialNumber == 0L) {
