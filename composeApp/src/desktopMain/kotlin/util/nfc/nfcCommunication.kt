@@ -1,18 +1,27 @@
-package Nfc
+package util.nfc
 
 import com.fazecast.jSerialComm.SerialPort
+import kotlinx.coroutines.*
 import java.nio.charset.StandardCharsets
 
-class NfcCommunication {
-    fun getSerial(): Long {
-        val comPort: SerialPort = SerialPort.getCommPorts()[0]
-        comPort.setBaudRate(115200)
+actual suspend fun nfcCommunication(): Long = coroutineScope {
+    val nfc = NfcComm()
+    val nfcId = nfc.getSerial()
+    return@coroutineScope nfcId
+}
+
+class NfcComm {
+    suspend fun getSerial(): Long {
         var serialNumber: Long = 0
+        val comPort = SerialPort.getCommPorts().firstOrNull() ?: throw RuntimeException("No COM ports available")
+        
         try {
+            comPort.setBaudRate(115200)
             comPort.openPort()
             println("Serial port opened")
             while (serialNumber == 0L) {
-                if (comPort.bytesAvailable() > 0) {
+                val availableBytes = comPort.bytesAvailable()
+                if (availableBytes > 0) {
                     val readBuffer = ByteArray(comPort.bytesAvailable())
                     comPort.readBytes(readBuffer, readBuffer.size)
                     val message = String(readBuffer, StandardCharsets.US_ASCII).trim { it <= ' ' }
@@ -28,17 +37,19 @@ class NfcCommunication {
                     // Call your function or perform actions based on the serial number
                     //}
                 }
-                Thread.sleep(100) // Add a short delay to avoid busy-waiting
+                delay(100) // Add a short delay to avoid busy-waiting
+                if (serialNumber == 0L){
+                    println("geen data ontvangen dus we sluiten de port")
+                    break
+                }
             }
+            
         } catch (e: Exception) {
-            e.printStackTrace()
+            println("Error detected: ${e.message}")
         } finally {
             comPort.closePort()
             println("Serial port closed")
         }
         return serialNumber
-    }
-    fun getSerialFake(): Long {
-        return 0L
     }
 }

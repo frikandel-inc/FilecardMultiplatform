@@ -1,4 +1,3 @@
-
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
@@ -6,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    kotlin("plugin.serialization") version "1.9.21"
 }
 
 kotlin {
@@ -21,6 +21,11 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.kotlinx.coroutines.android)
+            implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
+            implementation("commons-net:commons-net:3.8.0")
+            implementation(libs.androidx.appcompat)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -30,12 +35,22 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation(libs.ktor.client.core)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation("io.ktor:ktor-client-logging:2.3.7")
+            implementation("org.jetbrains.kotlinx:kotlinx-io:0.1.16")
+            implementation("io.ktor:ktor-client-auth:2.3.7")
+            implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.3.0")
+            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
             implementation("com.arkivanov.decompose:decompose:2.2.2")
+            implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.1.4-compose-experimental")
         }
         val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.ktor.client.okhttp)
+            implementation("commons-net:commons-net:3.8.0")
             implementation("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
         }
     }
