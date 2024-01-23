@@ -3,14 +3,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.*
-import serverutil.FtpClientJvm
+import util.ftp.FtpClientJvm
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication, title = "FilecardMultiplatform") {
         //maak een FtpClientJvm aan en geef die door naar ftptest
         val ftpclient = FtpClientJvm()
         ftptest(ftpclient)
-        App()
     }
 }
 

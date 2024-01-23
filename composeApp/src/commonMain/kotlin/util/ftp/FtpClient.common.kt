@@ -1,8 +1,6 @@
-package serverutil
+package util.ftp
 
-import io.ktor.utils.io.core.*
-import serverutil.FTPFile as File
-import kotlinx.coroutines.*
+import util.ftp.FTPFile as File
 
 
 interface FtpClientCommon {

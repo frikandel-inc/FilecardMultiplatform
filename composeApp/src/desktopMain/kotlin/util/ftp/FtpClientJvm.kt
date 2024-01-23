@@ -1,15 +1,12 @@
-package serverutil
+package util.ftp
 
-import kotlinx.coroutines.*
 import org.apache.commons.net.ftp.FTP
-import java.io.FileInputStream
 import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPCmd
-import org.apache.commons.net.ftp.FTPFile
-import serverutil.FTPFile as File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 
-class FtpClientJvm : FtpClientCommon{
+class FtpClientJvm : FtpClientCommon {
     private val client: FTPClient = FTPClient().apply {
         autodetectUTF8 = true
     }
@@ -79,16 +76,16 @@ class FtpClientJvm : FtpClientCommon{
         return client.rename(old, new)
     }
 
-    override suspend fun list(path: String?): List<File> {
+    override suspend fun list(path: String?): List<FTPFile> {
         return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
     }
 
-    override suspend fun file(path: String): File {
+    override suspend fun file(path: String): FTPFile {
         if (!supportsMlsCommands) {
             // TODO improve this
             throw IllegalStateException("server does not support MLST command")
         }
-        return File(client.mlistFile(path))
+        return FTPFile(client.mlistFile(path))
     }
 
     override suspend fun exit(): Boolean {
@@ -100,10 +97,10 @@ class FtpClientJvm : FtpClientCommon{
     }
 
     companion object {
-        internal fun convertFiles(files: Array<FTPFile>): List<File> {
-            val result = ArrayList<File>()
+        internal fun convertFiles(files: Array<org.apache.commons.net.ftp.FTPFile>): List<FTPFile> {
+            val result = ArrayList<FTPFile>()
             files.forEach {
-                result.add(File(it))
+                result.add(FTPFile(it))
             }
             return result
         }

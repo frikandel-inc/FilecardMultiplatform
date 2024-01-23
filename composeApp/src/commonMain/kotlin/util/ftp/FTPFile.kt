@@ -1,4 +1,4 @@
-package serverutil;
+package util.ftp;
 
 import java.util.*
 

@@ -12,8 +12,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import serverutil.FtpClientCommon as FtpClient
-import serverutil.FTPFile as File
+import util.ftp.FtpClientCommon as FtpClient
+import util.ftp.FTPFile as File
 import kotlinx.coroutines.*
 import androidx.compose.runtime.LaunchedEffect
 

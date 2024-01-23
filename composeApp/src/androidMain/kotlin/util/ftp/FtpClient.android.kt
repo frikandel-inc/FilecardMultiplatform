@@ -1,4 +1,4 @@
-package serverutil
+package util.ftp
 
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -6,13 +6,11 @@ import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPCmd
 import org.apache.commons.net.ftp.FTPFile
-import serverutil.FTPFile as File
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import util.ftp.FTPFile as File
 
 
 //dit is gewoon een kopie van FtpClientJvm uit desktopMain
-class FtpClientAndroid : FtpClientCommon{
+class FtpClientAndroid : FtpClientCommon {
     private val client: FTPClient = FTPClient().apply {
         autodetectUTF8 = true
     }
