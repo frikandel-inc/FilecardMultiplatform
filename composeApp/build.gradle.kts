@@ -34,8 +34,6 @@ kotlin {
             implementation(compose.components.resources)
             implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
-            implementation("com.arkivanov.decompose:decompose:2.2.2")
-            implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.1.4-compose-experimental")
         }
         val desktopMain by getting
         desktopMain.dependencies {

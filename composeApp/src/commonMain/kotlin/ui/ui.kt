@@ -12,8 +12,6 @@ import ui.Expanded.HomeScreenExpanded
 @Composable
 @FlowPreview
 fun Window() {
-
-
     val windowSize = calculateWindowSizeClass().widthSizeClass
     if(windowSize.toString() == WindowWidthSizeClass.Expanded.toString()) {
         HomeScreenExpanded()
