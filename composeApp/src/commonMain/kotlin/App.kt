@@ -1,5 +1,8 @@
 
 
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -27,6 +30,7 @@ fun App() {
         if (isSystemInDarkTheme() == true) {
             colorScheme = darkColorScheme()
         }
+
         val navigator = rememberNavigator()
         MaterialTheme(colorScheme = colorScheme) {
             NavHost(
@@ -34,26 +38,27 @@ fun App() {
                 navigator = navigator,
                 // Navigation transition for the scenes in this NavHost, this is optional
                 navTransition = NavTransition(
+                    createTransition = fadeIn(animationSpec = TweenSpec(100),initialAlpha = 0.9F),
+                    destroyTransition = fadeOut(animationSpec = TweenSpec(100),targetAlpha = 0.9F),
+                    pauseTransition = fadeOut(animationSpec = TweenSpec(100),targetAlpha = 0.9F),
+                    resumeTransition = fadeIn(animationSpec = TweenSpec(100),initialAlpha = 0.9F),
+                    enterTargetContentZIndex = 1f,
 
-                ),
+
+                    ),
                 // The start destination
                 initialRoute = "/home",
             ) {
                 // Define a scene to the navigation graph
-                scene(
-                    // Scene's route path
-                    route = "/home",
-                    // Navigation transition for this scene, this is optional
-                    navTransition = NavTransition(),
-                ) {
+                scene(route = "/home",) {
                     HomeAppBar (navigator=navigator){ HomeScreen()}
 
                 }
-                scene(route= "/nfc", navTransition = NavTransition()) {
+                scene(route= "/nfc") {
                     HomeAppBar (navigator=navigator){ NfcScreen() }
 
                 }
-                scene(route= "/file", navTransition = NavTransition()) {
+                scene(route= "/file") {
                     HomeAppBar (navigator=navigator){ DownloadScreen() }
 
                 }

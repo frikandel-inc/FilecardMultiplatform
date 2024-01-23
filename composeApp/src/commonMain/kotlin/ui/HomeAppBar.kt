@@ -26,6 +26,7 @@ fun HomeAppBar(navigator: Navigator,content: @Composable ()->Unit){
         bottomBar = {
             BottomAppBar {
                 Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+//                    Spacer(modifier = Modifier.padding(16.dp))
                     TextButton(onClick = {navigator.navigate("/nfc",NavOptions(launchSingleTop = true))}) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
