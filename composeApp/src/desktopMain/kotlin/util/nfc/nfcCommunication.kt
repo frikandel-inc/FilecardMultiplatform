@@ -38,8 +38,10 @@ class NfcComm {
                     //}
                 }
                 delay(100) // Add a short delay to avoid busy-waiting
-                if (serialNumber == 0L){break}
-                println("geen data ontvangen dus we sluiten de port")
+                if (serialNumber == 0L){
+                    println("geen data ontvangen dus we sluiten de port")
+                    break
+                }
             }
             
         } catch (e: Exception) {
