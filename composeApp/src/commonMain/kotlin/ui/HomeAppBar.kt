@@ -15,14 +15,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import moe.tlaster.precompose.navigation.NavOptions
+import moe.tlaster.precompose.navigation.Navigator
 
 @Composable
-fun HomeAppBar(content: @Composable ()->Unit){
+fun HomeAppBar(navigator: Navigator,content: @Composable ()->Unit){
     Scaffold(
         bottomBar = {
             BottomAppBar {
                 Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = {navigator.navigate("/nfc",NavOptions(launchSingleTop = true))}) {
                         Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
                             Icon(
                                 imageVector = Icons.Filled.Nfc,
@@ -31,7 +33,7 @@ fun HomeAppBar(content: @Composable ()->Unit){
                             Text(text = "Scan", style = MaterialTheme.typography.labelSmall)
                         }
                         }
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = { navigator.navigate("/home", NavOptions(launchSingleTop = true))}) {
                         Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
 
                             Icon(
@@ -39,6 +41,17 @@ fun HomeAppBar(content: @Composable ()->Unit){
                                 contentDescription = "Home"
                             )
                             Text(text = "Home", style = MaterialTheme.typography.labelSmall)
+
+                        }
+                    }
+                    TextButton(onClick = { navigator.navigate("/downloads", NavOptions(launchSingleTop = true))}) {
+                        Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+
+                            Icon(
+                                imageVector = Icons.Filled.Home,
+                                contentDescription = "downloads"
+                            )
+                            Text(text = "Downloads", style = MaterialTheme.typography.labelSmall)
 
                         }
                     }
