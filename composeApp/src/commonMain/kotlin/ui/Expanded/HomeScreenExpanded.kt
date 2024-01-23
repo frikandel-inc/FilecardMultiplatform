@@ -6,9 +6,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import util.nfc.getNfcId
 
 @Composable
@@ -46,9 +52,9 @@ fun HomeMainExpanded(){
                     withContext(Dispatchers.IO){
                     message = getNfcId()
                     }
-                    println(message)
+//                    println(message)
                 }
-                println(message)
+//                println(message)
             }
         ) {
             Text("Scan NFC")
