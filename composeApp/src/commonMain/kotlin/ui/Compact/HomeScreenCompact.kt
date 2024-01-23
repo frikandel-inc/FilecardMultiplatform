@@ -5,17 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import ui.Shared.getNfcId
+import kotlinx.coroutines.*
+import util.nfc.getNfcId
 
 @Composable
 fun HomeScreenCompact() {
@@ -29,6 +22,7 @@ fun HomeScreenCompact() {
 @Composable
 fun HomeMainCompact(){
     var message by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
     Column (modifier = androidx.compose.ui.Modifier.padding(16.dp)){
         Text(
             text = "Compact",
@@ -41,11 +35,17 @@ fun HomeMainCompact(){
 
         Button(
             onClick = {
-                CoroutineScope(Dispatchers.Default).launch {
-                    withContext(context = Dispatchers.IO) {
+                //coroutine wordt gedaan met rememberCoroutineScope om memory leaks tegen te gaan
+                // wordt gedeclareerd op line 25
+                coroutineScope.launch {
+                    // assign de message value met de main thread, getNfcId wordt nogsteeds
+                    // gedaan met de IO thread want dat staat in de functie geschreven
+                    withContext(Dispatchers.IO){
                         message = getNfcId()
                     }
+                    println(message)
                 }
+
             }
         ){
             Text("Button")

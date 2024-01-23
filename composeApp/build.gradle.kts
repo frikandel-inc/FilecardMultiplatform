@@ -22,6 +22,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -31,12 +32,14 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
             implementation("com.arkivanov.decompose:decompose:2.2.2")
             implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.1.4-compose-experimental")
         }
         val desktopMain by getting
         desktopMain.dependencies {
+            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.3")
             implementation(compose.desktop.currentOs)
             implementation("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
         }
