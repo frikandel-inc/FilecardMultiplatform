@@ -1,6 +1,8 @@
 package ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,44 +31,50 @@ fun NfcScreen() {
     var message by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     Column (modifier = Modifier.padding(16.dp).fillMaxWidth()){
+        Spacer(modifier = Modifier.size(60.dp))
         Icon(
             imageVector = Icons.Filled.Nfc,
             contentDescription = "NFC",
             modifier = Modifier.size(100.dp).align(Alignment.CenterHorizontally)
-        )
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "Plaats de Nfc tag op de achterkant van uw telefoon",
-            style = MaterialTheme.typography.titleLarge,
             )
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "En wacht tot dat hij een trilling geeft",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Text(
+        Spacer(modifier = Modifier.size(60.dp))
+        Column(modifier = Modifier.fillMaxWidth(),verticalArrangement = Arrangement.Center) {
+            Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = "Plaats de Nfc tag op de achterkant van uw telefoon",
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = "En wacht tot dat hij een trilling geeft",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = message,
                 style = MaterialTheme.typography.titleMedium,
             )
-        Button(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
 
-            onClick = {
-                //coroutine wordt gedaan met rememberCoroutineScope om memory leaks tegen te gaan
-                // wordt gedeclareerd op line 25
-                coroutineScope.launch {
-                    // assign de message value met de main thread, getNfcId wordt nogsteeds
-                    // gedaan met de IO thread want dat staat in de functie geschreven
-                    withContext(Dispatchers.IO){
-                        message = getNfcId()
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+
+                onClick = {
+                    //coroutine wordt gedaan met rememberCoroutineScope om memory leaks tegen te gaan
+                    // wordt gedeclareerd op line 25
+                    coroutineScope.launch {
+                        // assign de message value met de main thread, getNfcId wordt nogsteeds
+                        // gedaan met de IO thread want dat staat in de functie geschreven
+                        withContext(Dispatchers.IO){
+                            message = getNfcId()
+                        }
+                        println(message)
                     }
-                    println(message)
-                }
 
+                }
+            ){
+                Text("Scan NFC")
             }
-        ){
-            Text("Scan NFC")
         }
+
     }
 }

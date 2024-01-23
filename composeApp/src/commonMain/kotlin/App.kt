@@ -33,7 +33,9 @@ fun App() {
                 // Assign the navigator to the NavHost
                 navigator = navigator,
                 // Navigation transition for the scenes in this NavHost, this is optional
-                navTransition = NavTransition(),
+                navTransition = NavTransition(
+
+                ),
                 // The start destination
                 initialRoute = "/home",
             ) {
@@ -51,7 +53,7 @@ fun App() {
                     HomeAppBar (navigator=navigator){ NfcScreen() }
 
                 }
-                scene(route= "/downloads", navTransition = NavTransition()) {
+                scene(route= "/file", navTransition = NavTransition()) {
                     HomeAppBar (navigator=navigator){ DownloadScreen() }
 
                 }

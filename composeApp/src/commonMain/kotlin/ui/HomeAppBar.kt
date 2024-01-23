@@ -27,7 +27,7 @@ fun HomeAppBar(navigator: Navigator,content: @Composable ()->Unit){
             BottomAppBar {
                 Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
                     TextButton(onClick = {navigator.navigate("/nfc",NavOptions(launchSingleTop = true))}) {
-                        Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
                                 modifier = Modifier.align(Alignment.CenterHorizontally),
                                 imageVector = Icons.Filled.Nfc,
@@ -40,7 +40,7 @@ fun HomeAppBar(navigator: Navigator,content: @Composable ()->Unit){
                         }
                         }
                     TextButton(onClick = { navigator.navigate("/home", NavOptions(launchSingleTop = true))}) {
-                        Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                             Icon(
                                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -54,19 +54,18 @@ fun HomeAppBar(navigator: Navigator,content: @Composable ()->Unit){
 
                         }
                     }
-                    TextButton(onClick = { navigator.navigate("/downloads", NavOptions(launchSingleTop = true))}) {
-                        Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-
+                    TextButton(onClick = { navigator.navigate("/file", NavOptions(launchSingleTop = true))}) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
                                 modifier = Modifier.align(Alignment.CenterHorizontally),
                                 imageVector = Icons.Filled.Download,
-                                contentDescription = "downloads"
+                                contentDescription = "file"
                             )
                             Text(
                                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                                text = "Downloads",
-                                style = MaterialTheme.typography.labelSmall)
-
+                                text = "File",
+                                style = MaterialTheme.typography.labelSmall
+                            )
                         }
                     }
                 }
