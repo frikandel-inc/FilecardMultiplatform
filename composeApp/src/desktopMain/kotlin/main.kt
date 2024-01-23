@@ -1,11 +1,13 @@
-
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import util.ftp.FtpClientJvm
 import javax.swing.SwingUtilities
 
 fun main() {
     application {
         Window(onCloseRequest = ::exitApplication, title = "Filecard") {
+            //maak een FtpClientJvm aan en geef die door naar ftptest
+            val ftpclient = FtpClientJvm()
             App()
         }
     }

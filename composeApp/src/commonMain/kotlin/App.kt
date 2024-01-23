@@ -12,7 +12,8 @@ import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 import moe.tlaster.precompose.navigation.transition.NavTransition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import ui.Window
+import util.ftp.FtpClientCommon as FtpClient
+import ui.HomeScreen
 
 @OptIn(ExperimentalResourceApi::class, FlowPreview::class,
     ExperimentalMaterial3WindowSizeClassApi::class,
@@ -41,7 +42,7 @@ fun App() {
                     // Navigation transition for this scene, this is optional
                     navTransition = NavTransition(),
                 ) {
-                    Window()
+                    HomeScreen()
 
                 }
             }
@@ -51,5 +52,4 @@ fun App() {
 
 
     }
-
 }

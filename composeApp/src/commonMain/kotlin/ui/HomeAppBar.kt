@@ -1,4 +1,4 @@
-package ui.Compact
+package ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun HomeAppBarCompact(content: @Composable ()->Unit){
+fun HomeAppBar(content: @Composable ()->Unit){
     Scaffold(
         bottomBar = {
             BottomAppBar {

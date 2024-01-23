@@ -1,4 +1,3 @@
-
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
@@ -22,7 +21,11 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.kotlinx.coroutines.android)
+            implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
+            implementation("commons-net:commons-net:3.8.0")
+            implementation(libs.androidx.appcompat)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -32,6 +35,12 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation(libs.ktor.client.core)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation("io.ktor:ktor-client-logging:2.3.7")
+            implementation("org.jetbrains.kotlinx:kotlinx-io:0.1.16")
+            implementation("io.ktor:ktor-client-auth:2.3.7")
+            implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.3.0")
             implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
             api(compose.foundation)
@@ -40,8 +49,9 @@ kotlin {
         }
         val desktopMain by getting
         desktopMain.dependencies {
-            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.3")
             implementation(compose.desktop.currentOs)
+            implementation(libs.ktor.client.okhttp)
+            implementation("commons-net:commons-net:3.8.0")
             implementation("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
         }
     }
