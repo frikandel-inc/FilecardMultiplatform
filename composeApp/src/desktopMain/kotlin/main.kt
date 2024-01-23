@@ -5,11 +5,13 @@ import androidx.compose.ui.window.application
 import kotlinx.coroutines.*
 import util.ftp.FtpClientJvm
 
-fun main() = application {
-    Window(onCloseRequest = ::exitApplication, title = "FilecardMultiplatform") {
-        //maak een FtpClientJvm aan en geef die door naar ftptest
-        val ftpclient = FtpClientJvm()
-        ftptest(ftpclient)
+fun main() {
+    application {
+        Window(onCloseRequest = ::exitApplication, title = "Filecard") {
+            //maak een FtpClientJvm aan en geef die door naar ftptest
+            val ftpclient = FtpClientJvm()
+            App()
+        }
     }
 }
 
@@ -18,5 +20,5 @@ fun main() = application {
 @Composable
 fun AppDesktopPreview() {
     val ftpclient = FtpClientJvm()
-    ftptest(ftpclient)
+    App()
 }
