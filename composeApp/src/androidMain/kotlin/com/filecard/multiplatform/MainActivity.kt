@@ -13,8 +13,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.arkivanov.decompose.retainedComponent
-import nav.RootComponent
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.defaultComponentContext
+import nav.DefaultRootComponent
 
 
 var status by mutableStateOf(0L)
@@ -32,11 +33,13 @@ class MainActivity : ComponentActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT
         }
 
+    @OptIn(ExperimentalDecomposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val root = retainedComponent {
-            RootComponent(it)
-        }
+        val root =
+            DefaultRootComponent(
+                componentContext = defaultComponentContext(),
+            )
         pendingIntent =
             PendingIntent.getActivity(
                 this, 0,
@@ -46,7 +49,7 @@ class MainActivity : ComponentActivity() {
             )
 
         setContent {
-            App()
+            App(root)
         }
     }
 
