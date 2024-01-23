@@ -6,25 +6,26 @@ import org.apache.commons.net.ftp.FTPCmd
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-class FtpClientJvm : FtpClientCommon {
+
+actual class FtpClient {
     private val client: FTPClient = FTPClient().apply {
         autodetectUTF8 = true
     }
 
-    override suspend fun connect(host: String, port: Int) {
-        client.setRemoteVerificationEnabled(false)
+    actual suspend fun connect(host: String, port: Int) {
+        client.isRemoteVerificationEnabled = false
         client.connect(host, port)
     }
 
-    override var implicit: Boolean = false
+    actual var implicit: Boolean = false
 
-    override var utf8: Boolean = false
+    actual var utf8: Boolean = false
         set(value) {
             if (value) client.controlEncoding = "UTF-8"
             field = value
         }
 
-    override var passive: Boolean = false
+    actual var passive: Boolean = false
         set(value) {
             if (value) client.enterLocalPassiveMode()
             else client.enterLocalActiveMode()
@@ -33,24 +34,24 @@ class FtpClientJvm : FtpClientCommon {
 
     private var supportsMlsCommands = false
 
-    override suspend fun login(user: String, password: String) {
+    actual suspend fun login(user: String, password: String) {
         client.login(user, password)
         client.setFileType(FTP.BINARY_FILE_TYPE)
         supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
     }
 
-    override val isConnected: Boolean
+    actual val isConnected: Boolean
         get() = client.isConnected
-    override var privateData: Boolean = false
+    actual var privateData: Boolean = false
 
 
-    override suspend fun downloadFile(remoteFile: String, localFile: String): Boolean{
+    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean{
         val outputStream = FileOutputStream(localFile)
         return client.retrieveFile(remoteFile, outputStream)
 
     }
 
-    override suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
+    actual suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
         try {
             val inputStream = FileInputStream(localFile)
             return client.storeFile(remoteFile, inputStream)
@@ -60,27 +61,27 @@ class FtpClientJvm : FtpClientCommon {
         }
     }
 
-    override suspend fun mkdir(path: String): Boolean {
+    actual suspend fun mkdir(path: String): Boolean {
         return client.makeDirectory(path)
     }
 
-    override suspend fun deleteFile(path: String): Boolean {
+    actual suspend fun deleteFile(path: String): Boolean {
         return client.deleteFile(path)
     }
 
-    override suspend fun deleteDir(path: String): Boolean {
+    actual suspend fun deleteDir(path: String): Boolean {
         return client.removeDirectory(path)
     }
 
-    override suspend fun rename(old: String, new: String): Boolean {
+    actual suspend fun rename(old: String, new: String): Boolean {
         return client.rename(old, new)
     }
 
-    override suspend fun list(path: String?): List<FTPFile> {
+    actual suspend fun list(path: String?): List<FTPFile> {
         return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
     }
 
-    override suspend fun file(path: String): FTPFile {
+    actual suspend fun file(path: String): FTPFile {
         if (!supportsMlsCommands) {
             // TODO improve this
             throw IllegalStateException("server does not support MLST command")
@@ -88,7 +89,7 @@ class FtpClientJvm : FtpClientCommon {
         return FTPFile(client.mlistFile(path))
     }
 
-    override suspend fun exit(): Boolean {
+    actual suspend fun exit(): Boolean {
         if (!client.logout()) {
             return false
         }
@@ -105,6 +106,4 @@ class FtpClientJvm : FtpClientCommon {
             return result
         }
     }
-
-
 }

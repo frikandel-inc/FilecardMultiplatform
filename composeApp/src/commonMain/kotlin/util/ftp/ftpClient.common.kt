@@ -3,7 +3,7 @@ package util.ftp
 import util.ftp.FTPFile as File
 
 
-interface FtpClientCommon {
+expect class FtpClient {
     suspend fun connect(host: String, port: Int)
     var implicit: Boolean
     var utf8: Boolean
