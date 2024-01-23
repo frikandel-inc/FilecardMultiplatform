@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Nfc
 import androidx.compose.material3.BottomAppBar
@@ -14,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -27,20 +29,28 @@ fun HomeAppBar(navigator: Navigator,content: @Composable ()->Unit){
                     TextButton(onClick = {navigator.navigate("/nfc",NavOptions(launchSingleTop = true))}) {
                         Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
                             Icon(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
                                 imageVector = Icons.Filled.Nfc,
                                 contentDescription = "NFC"
                             )
-                            Text(text = "Scan", style = MaterialTheme.typography.labelSmall)
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = "Scan",
+                                style = MaterialTheme.typography.labelSmall)
                         }
                         }
                     TextButton(onClick = { navigator.navigate("/home", NavOptions(launchSingleTop = true))}) {
                         Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
 
                             Icon(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
                                 imageVector = Icons.Filled.Home,
                                 contentDescription = "Home"
                             )
-                            Text(text = "Home", style = MaterialTheme.typography.labelSmall)
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = "Home",
+                                style = MaterialTheme.typography.labelSmall)
 
                         }
                     }
@@ -48,10 +58,14 @@ fun HomeAppBar(navigator: Navigator,content: @Composable ()->Unit){
                         Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
 
                             Icon(
-                                imageVector = Icons.Filled.Home,
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                imageVector = Icons.Filled.Download,
                                 contentDescription = "downloads"
                             )
-                            Text(text = "Downloads", style = MaterialTheme.typography.labelSmall)
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = "Downloads",
+                                style = MaterialTheme.typography.labelSmall)
 
                         }
                     }
