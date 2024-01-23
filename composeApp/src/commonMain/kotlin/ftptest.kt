@@ -1,9 +1,9 @@
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +17,7 @@ import util.ftp.FTPFile as File
 import kotlinx.coroutines.*
 import androidx.compose.runtime.LaunchedEffect
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
 @Composable
 fun ftptest(ftpClient: FtpClient){
     MaterialTheme {
