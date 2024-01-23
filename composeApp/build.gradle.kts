@@ -34,6 +34,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
+            api(compose.foundation)
+            api(compose.animation)
+            api("moe.tlaster:precompose:1.5.10")
         }
         val desktopMain by getting
         desktopMain.dependencies {
