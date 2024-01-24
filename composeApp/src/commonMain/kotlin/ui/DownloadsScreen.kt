@@ -29,10 +29,10 @@ fun DownloadScreen() {
             onClick = {
                 //coroutine wordt gedaan met rememberCoroutineScope om memory leaks tegen te gaan
                 // wordt gedeclareerd op line 25
-                var ftpfilelist : List<FTPFile> = coroutineScope.launch {
+                var ftpfilelist : List<FTPFile> =
                     // assign de message value met de main thread, getNfcId wordt nogsteeds
                     // gedaan met de IO thread want dat staat in de functie geschreven
-                    return@launch withContext(Dispatchers.IO){
+                    withContext(Dispatchers.IO){
                         return@withContext ftpfilelist = ftpFun()
                     }
                     println(ftpmessage)
