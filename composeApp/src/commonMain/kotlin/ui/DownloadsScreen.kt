@@ -35,7 +35,7 @@ import util.ftp.ftpFun
 fun DownloadScreen(userid:Long?) {
     var filelist by remember { mutableStateOf(arrayListOf<FTPFile>()) }
     val coroutineScope = rememberCoroutineScope()
-    var userid : Long = 1
+//    var userid : Long = 1
 //        val counterContext = newSingleThreadContext("CounterContext")
 //        val context = LocalContext.current // WERKT NIET
 
