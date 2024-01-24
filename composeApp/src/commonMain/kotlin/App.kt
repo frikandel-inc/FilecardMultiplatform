@@ -27,6 +27,7 @@ import ui.NfcScreen
 fun App() {
     PreComposeApp{
         var colorScheme = lightColorScheme()
+
         if (isSystemInDarkTheme() == true) {
             colorScheme = darkColorScheme()
         }
@@ -42,9 +43,6 @@ fun App() {
                     destroyTransition = fadeOut(animationSpec = TweenSpec(100),targetAlpha = 0.9F),
                     pauseTransition = fadeOut(animationSpec = TweenSpec(100),targetAlpha = 0.9F),
                     resumeTransition = fadeIn(animationSpec = TweenSpec(100),initialAlpha = 0.9F),
-                    enterTargetContentZIndex = 1f,
-
-
                     ),
                 // The start destination
                 initialRoute = "/home",
