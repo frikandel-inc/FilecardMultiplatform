@@ -77,7 +77,7 @@ actual class FtpClient {
         return client.rename(old, new)
     }
 
-    actual suspend fun list(path: String?): List<FTPFile> {
+    actual suspend fun list(path: String?): ArrayList<FTPFile> {
         return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
     }
 
@@ -98,7 +98,7 @@ actual class FtpClient {
     }
 
     companion object {
-        internal fun convertFiles(files: Array<org.apache.commons.net.ftp.FTPFile>): List<FTPFile> {
+        internal fun convertFiles(files: Array<org.apache.commons.net.ftp.FTPFile>): ArrayList<FTPFile> {
             val result = ArrayList<FTPFile>()
             files.forEach {
                 result.add(FTPFile(it))

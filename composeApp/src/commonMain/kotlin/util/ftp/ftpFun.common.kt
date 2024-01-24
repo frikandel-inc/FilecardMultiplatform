@@ -5,7 +5,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
-suspend fun ftpFun (userid: Long): List<FTPFile> {
+suspend fun ftpFun (userid: Long): ArrayList<FTPFile> {
     var message : String = ""
     val counterContext = newSingleThreadContext("CounterContext")
     return withContext(counterContext) {
@@ -15,7 +15,7 @@ suspend fun ftpFun (userid: Long): List<FTPFile> {
         client.connect("92.65.40.77", 3134)
         client.login("administrator", "Bitboysxp1")
         println(client.isConnected)
-        val files: List<FTPFile> = client.list("/$userid/")
+        val files: ArrayList<FTPFile> = client.list("/$userid/")
         println(files[5].name)
         client.exit()
         return@withContext files
@@ -51,6 +51,6 @@ suspend fun ftpDownload (downloadfile: String, userid: Long) {
             "/$userid/$downloadfile",
             "$path/.downloads/$downloadfile"
         )
-
+        client.exit()
     }
 }

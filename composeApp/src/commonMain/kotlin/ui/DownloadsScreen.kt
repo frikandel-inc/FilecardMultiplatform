@@ -17,7 +17,7 @@ import util.ftp.ftpDownload
 
 @Composable
 fun DownloadScreen() {
-    var filelist by remember { mutableStateOf(listOf<FTPFile>()) }
+    var filelist by remember { mutableStateOf(arrayListOf<FTPFile>()) }
     val coroutineScope = rememberCoroutineScope()
     var userid : Long = 1
     Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
@@ -26,7 +26,7 @@ fun DownloadScreen() {
                 // assign de message value met de main thread, getNfcId wordt nogsteeds
                 // gedaan met de IO thread want dat staat in de functie geschreven
                 coroutineScope.launch(Dispatchers.IO) {
-                    val ftpfilelist : List<FTPFile> = ftpFun(userid)
+                    val ftpfilelist : ArrayList<FTPFile> = ftpFun(userid)
                     withContext(Dispatchers.Default) {
                         filelist = ftpfilelist
                     }

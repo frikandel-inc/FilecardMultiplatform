@@ -17,7 +17,7 @@ expect class FtpClient {
     suspend fun deleteFile(path: String): Boolean
     suspend fun deleteDir(path: String): Boolean
     suspend fun rename(old: String, new: String): Boolean
-    suspend fun list(path: String?): List<File>
+    suspend fun list(path: String?): ArrayList<File>
     suspend fun file(path: String): File
     suspend fun exit(): Boolean
 }
