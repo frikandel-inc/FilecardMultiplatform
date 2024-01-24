@@ -1,9 +1,11 @@
 package util.ftp
 
 import kotlinx.coroutines.*
+import java.nio.file.Files
+import java.nio.file.Paths
 
 @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
-suspend fun ftpFun (): List<FTPFile> {
+suspend fun ftpFun (userid: Long): List<FTPFile> {
     var message : String = ""
     val counterContext = newSingleThreadContext("CounterContext")
     return withContext(counterContext) {
@@ -12,20 +14,41 @@ suspend fun ftpFun (): List<FTPFile> {
         client.passive = true
         client.connect("92.65.40.77", 3134)
         client.login("administrator", "Bitboysxp1")
-        val files: List<FTPFile> = client.list("/1/")
-        if (files.size > 1) {
-            //geef hier aan welke file hij moet downloaden uit de lijst, mits de directory niet leeg is
-            val downloadfile: String = files[5].name
-            val path = System.getProperty("user.dir")
-            //Maak een directory genaamd .downloads aan in /composeApp/, anders crasht de app haha
-            client.downloadFile(
-                "/1/$downloadfile",
-                "$path/.downloads/$downloadfile"
-            )
-        }
+        val files: List<FTPFile> = client.list("/$userid/")
         client.exit()
         return@withContext files
     }
 
 }
-    // nog implementeren
+@OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
+suspend fun ftpDownload (downloadfile: String, userid: Long) {
+    val counterContext = newSingleThreadContext("CounterContext")
+    return withContext(counterContext) {
+        val client = FtpClientFactory.create()
+        client.utf8 = true
+        client.passive = true
+        client.connect("92.65.40.77", 3134)
+        client.login("administrator", "Bitboysxp1")
+        val path = System.getProperty("user.dir")
+        //Maak een directory genaamd .downloads aan in /composeApp/
+
+        val dirpath = Paths.get("$path/.downloads/")
+
+        if (!Files.exists(dirpath)) {
+            try {
+                Files.createDirectories(dirpath)
+                println("Directory created")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
+            println("Directory already exists")
+        }
+
+        client.downloadFile(
+            "/$userid/$downloadfile",
+            "$path/.downloads/$downloadfile"
+        )
+
+    }
+}
