@@ -37,7 +37,8 @@ actual class FtpClient {
     actual suspend fun login(user: String, password: String) {
         client.login(user, password)
         client.setFileType(FTP.BINARY_FILE_TYPE)
-        supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
+        client.enterLocalPassiveMode()
+//        supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
     }
 
     actual val isConnected: Boolean

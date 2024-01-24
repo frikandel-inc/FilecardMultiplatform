@@ -1,6 +1,9 @@
 package util.ftp
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.withContext
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -16,7 +19,7 @@ suspend fun ftpFun (userid: Long): ArrayList<FTPFile> {
         client.login("administrator", "Bitboysxp1")
         println(client.isConnected)
         val files: ArrayList<FTPFile> = client.list("/$userid/")
-        println(files[5].name)
+        println(files.size)
         client.exit()
         return@withContext files
     }
