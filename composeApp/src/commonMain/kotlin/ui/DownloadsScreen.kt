@@ -3,6 +3,7 @@ package ui
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,14 +34,16 @@ import util.ftp.ftpFun
 fun DownloadScreen(userid:Long?) {
     var filelist by remember { mutableStateOf(arrayListOf<FTPFile>()) }
     val coroutineScope = rememberCoroutineScope()
-//    var userid : Long = 1
+    var userid : Long = 1
     Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
+        Spacer(modifier = Modifier.padding(32.dp))
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 // assign de message value met de main thread, getNfcId wordt nogsteeds
                 // gedaan met de IO thread want dat staat in de functie geschreven
                 if (userid == null) {
+
                     println("userid-download:"+userid)
                 } else {
                     coroutineScope.launch(Dispatchers.IO) {
