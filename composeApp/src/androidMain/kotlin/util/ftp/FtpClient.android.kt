@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPCmd
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.OutputStream
 
 
 actual class FtpClient {
@@ -46,8 +47,8 @@ actual class FtpClient {
 
     actual var privateData: Boolean = false
 
-    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean {
-        val outputStream = FileOutputStream(localFile)
+    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean extends C {
+        var outputStream : OutputStream = OutputStream(localFile)
         return client.retrieveFile(remoteFile, outputStream)
 
     }
