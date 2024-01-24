@@ -26,8 +26,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import util.nfc.getNfcId
 
+@OptIn(ExperimentalStdlibApi::class)
 @Composable
-fun NfcScreen() {
+fun NfcScreen(nfcId:Long?):Long? {
+    var nfcId2 by remember { mutableStateOf(nfcId) }
     var message by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     Column (modifier = Modifier.padding(16.dp).fillMaxWidth()){
@@ -50,10 +52,11 @@ fun NfcScreen() {
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(8.dp),
                 text = message,
                 style = MaterialTheme.typography.titleMedium,
             )
+
 
             Button(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -67,8 +70,14 @@ fun NfcScreen() {
                         withContext(Dispatchers.IO){
                             message = getNfcId()
                         }
-                        println(message)
+                        println("message: "+message)
+                        if ((message == "") || (message == "0")) {
+                            nfcId2 = null
+                        } else {
+                            nfcId2 = message.toLong()
+                        }
                     }
+
 
                 }
             ){
@@ -77,4 +86,6 @@ fun NfcScreen() {
         }
 
     }
+    println("nfcId-nfc: "+nfcId2)
+    return nfcId2
 }
