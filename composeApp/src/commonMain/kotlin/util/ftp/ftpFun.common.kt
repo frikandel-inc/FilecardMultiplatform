@@ -14,7 +14,9 @@ suspend fun ftpFun (userid: Long): List<FTPFile> {
         client.passive = true
         client.connect("92.65.40.77", 3134)
         client.login("administrator", "Bitboysxp1")
+        println(client.isConnected)
         val files: List<FTPFile> = client.list("/$userid/")
+        println(files[5].name)
         client.exit()
         return@withContext files
     }
