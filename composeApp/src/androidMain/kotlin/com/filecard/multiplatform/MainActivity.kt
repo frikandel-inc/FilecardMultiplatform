@@ -2,6 +2,7 @@ package com.filecard.multiplatform
 
 import App
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
@@ -43,7 +44,6 @@ class MainActivity : ComponentActivity() {
                     addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 }, intentFlags()
             )
-
         setContent {
             App()
         }

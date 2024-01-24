@@ -26,16 +26,25 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.ui.platform.*
+import kotlinx.coroutines.*
+import util.ftp.ftpFun
 import util.ftp.FTPFile
 import util.ftp.ftpDownload
-import util.ftp.ftpFun
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun DownloadScreen(userid:Long?) {
     var filelist by remember { mutableStateOf(arrayListOf<FTPFile>()) }
     val coroutineScope = rememberCoroutineScope()
 //    var userid : Long = 1
     Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
+    val counterContext = newSingleThreadContext("CounterContext")
+    val context = LocalContext.current // WERKT NIET
+    var userid : Long = 1
+
+    Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+>>>>>>> Stashed changes
         Spacer(modifier = Modifier.padding(32.dp))
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -51,6 +60,10 @@ fun DownloadScreen(userid:Long?) {
                         withContext(Dispatchers.Default) {
                             filelist = ftpfilelist
                         }
+                coroutineScope.launch() {
+                    val ftpfilelist : ArrayList<FTPFile> = ftpFun(userid)
+                    withContext(Dispatchers.Default) {
+                        filelist = ftpfilelist
                     }
                 }
 
