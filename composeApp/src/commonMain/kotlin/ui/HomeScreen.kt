@@ -17,10 +17,6 @@ import util.nfc.getNfcId
 
 @Composable
 fun HomeScreen(){
-//    val coroutineScope = rememberCoroutineScope()
-    var message by remember { mutableStateOf("") }
-    var ftpmessage by remember { mutableStateOf("") }
-    val coroutineScope = rememberCoroutineScope()
     Column (modifier = Modifier.padding(16.dp).fillMaxWidth()){
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -37,46 +33,6 @@ fun HomeScreen(){
             text = "Wilt u uw downloads zien druk dan op Downloads aan de onderkant van uw scherm",
             style = MaterialTheme.typography.titleMedium,
         )
-//dit is nog mijn oude spul
-        Button(
-            onClick = {
-                //coroutine wordt gedaan met rememberCoroutineScope om memory leaks tegen te gaan
-                // wordt gedeclareerd op line 25
-                coroutineScope.launch {
-                    // assign de message value met de main thread, getNfcId wordt nogsteeds
-                    // gedaan met de IO thread want dat staat in de functie geschreven
-                    withContext(Dispatchers.IO){
-                        ftpFun()
-                    }
-                    println(message)
-                }
-
-
-            }
-        ){
-            Text("Button")
-        }
-        Text(
-            text = ftpmessage,
-            style = MaterialTheme.typography.titleMedium,
-            )
-        Button(
-            onClick = {
-                //coroutine wordt gedaan met rememberCoroutineScope om memory leaks tegen te gaan
-                // wordt gedeclareerd op line 25
-                coroutineScope.launch {
-                    // assign de message value met de main thread, getNfcId wordt nogsteeds
-                    // gedaan met de IO thread want dat staat in de functie geschreven
-                    withContext(Dispatchers.IO){
-                        ftpmessage = ftpFun()
-                    }
-                    println(ftpmessage)
-                }
-
-            }
-        ){
-            Text("Button 2")
-        }
     }
 
 }
