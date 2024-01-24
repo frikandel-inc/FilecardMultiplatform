@@ -21,3 +21,7 @@ expect class FtpClient {
     suspend fun file(path: String): File
     suspend fun exit(): Boolean
 }
+
+expect object FtpClientFactory {
+    fun create(): FtpClient
+}

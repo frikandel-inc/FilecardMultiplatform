@@ -12,7 +12,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import util.ftp.FtpClientAndroid
+import util.ftp.FtpClient
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val ftpclient = FtpClientAndroid()
+        val ftpclient = FtpClient()
         super.onCreate(savedInstanceState)
         pendingIntent =
             PendingIntent.getActivity(

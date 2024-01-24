@@ -53,6 +53,7 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation("commons-net:commons-net:3.8.0")
             implementation("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
+            implementation("org.jetbrains.skiko:skiko-awt:0.6.7")
         }
     }
 }

@@ -1,14 +1,12 @@
 package util.ftp
 
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPCmd
-import org.apache.commons.net.ftp.FTPFile
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 
-//dit is gewoon een kopie van FtpClientJvm uit desktopMain
 actual class FtpClient {
     private val client: FTPClient = FTPClient().apply {
         autodetectUTF8 = true
@@ -44,10 +42,10 @@ actual class FtpClient {
 
     actual val isConnected: Boolean
         get() = client.isConnected
+
     actual var privateData: Boolean = false
 
-
-    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean{
+    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean {
         val outputStream = FileOutputStream(localFile)
         return client.retrieveFile(remoteFile, outputStream)
 
@@ -107,5 +105,13 @@ actual class FtpClient {
             }
             return result
         }
+    }
+}
+
+actual object FtpClientFactory {
+    //maakt een FtpClient aan stuurt hem terug naar de shared code
+
+    actual fun create(): FtpClient {
+        return FtpClient()
     }
 }

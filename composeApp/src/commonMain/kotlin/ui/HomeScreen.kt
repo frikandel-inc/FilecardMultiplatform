@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -45,10 +46,11 @@ fun HomeScreen(){
                     // assign de message value met de main thread, getNfcId wordt nogsteeds
                     // gedaan met de IO thread want dat staat in de functie geschreven
                     withContext(Dispatchers.IO){
-                        message = getNfcId()
+                        ftpFun()
                     }
                     println(message)
                 }
+
 
             }
         ){
