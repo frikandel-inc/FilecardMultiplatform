@@ -47,8 +47,8 @@ actual class FtpClient {
 
     actual var privateData: Boolean = false
 
-    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean extends C {
-        var outputStream : OutputStream = OutputStream(localFile)
+    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean {
+        var outputStream : OutputStream = FileOutputStream(localFile)
         return client.retrieveFile(remoteFile, outputStream)
 
     }

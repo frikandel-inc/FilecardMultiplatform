@@ -4,7 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -24,13 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import androidx.compose.ui.platform.*
-import kotlinx.coroutines.*
-import util.ftp.ftpFun
 import util.ftp.FTPFile
 import util.ftp.ftpDownload
+import util.ftp.ftpFun
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
@@ -38,84 +36,88 @@ fun DownloadScreen(userid:Long?) {
     var filelist by remember { mutableStateOf(arrayListOf<FTPFile>()) }
     val coroutineScope = rememberCoroutineScope()
 //    var userid : Long = 1
-    Column(modifier = Modifier.padding(16.dp).fillMaxSize()) {
-    val counterContext = newSingleThreadContext("CounterContext")
-    val context = LocalContext.current // WERKT NIET
-    var userid : Long = 1
+//        val counterContext = newSingleThreadContext("CounterContext")
+//        val context = LocalContext.current // WERKT NIET
 
-    Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
->>>>>>> Stashed changes
-        Spacer(modifier = Modifier.padding(32.dp))
-        Button(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = {
-                // assign de message value met de main thread, getNfcId wordt nogsteeds
-                // gedaan met de IO thread want dat staat in de functie geschreven
-                if (userid == null) {
+        Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+            Spacer(modifier = Modifier.padding(32.dp))
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = {
+                    // assign de message value met de main thread, getNfcId wordt nogsteeds
+                    // gedaan met de IO thread want dat staat in de functie geschreven
+                    if (userid == null) {
 
-                    println("userid-download:"+userid)
-                } else {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        val ftpfilelist : ArrayList<FTPFile> = ftpFun(userid)
-                        withContext(Dispatchers.Default) {
-                            filelist = ftpfilelist
+                        println("userid-download:" + userid)
+                    } else {
+                        coroutineScope.launch(Dispatchers.IO) {
+                            val ftpfilelist: ArrayList<FTPFile> = ftpFun(userid)
+                            withContext(Dispatchers.Default) {
+                                filelist = ftpfilelist
+                            }
                         }
-                coroutineScope.launch() {
-                    val ftpfilelist : ArrayList<FTPFile> = ftpFun(userid)
-                    withContext(Dispatchers.Default) {
-                        filelist = ftpfilelist
                     }
-                }
+//                coroutineScope.launch() {
+//                    val ftpfilelist : ArrayList<FTPFile> = ftpFun(userid)
+//                    withContext(Dispatchers.Default) {
+//                        filelist = ftpfilelist
+//                    }
+//                }
 
+                }
+            ) {
+                Text("Connect to File Server")
             }
-        ) {
-            Text("Connect to File Server")
-        }
             Text(
-                text = "Results "+filelist.size+" , Id : $userid",
+                text = "Results " + filelist.size + " , Id : $userid",
                 modifier = Modifier.padding(4.dp).align(Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.labelMedium
             )
 
 
 
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(128.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier =  Modifier.fillMaxWidth().animateContentSize()) {
-            for (file in filelist) {
-                item {
-                    Card {
-                        Text(
-                            text = file.name,
-                            modifier = Modifier.padding(4.dp).align(Alignment.CenterHorizontally),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Text(
-                            text = file.size.toString()+" bytes",
-                            modifier = Modifier.padding(2.dp).align(Alignment.CenterHorizontally),
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                        TextButton(
-                            modifier = Modifier.padding(8.dp).align(Alignment.CenterHorizontally),
-                            onClick = {
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(128.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth().animateContentSize()
+            ) {
+                for (file in filelist) {
+                    item {
+                        Card {
+                            Text(
+                                text = file.name,
+                                modifier = Modifier.padding(4.dp)
+                                    .align(Alignment.CenterHorizontally),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Text(
+                                text = file.size.toString() + " bytes",
+                                modifier = Modifier.padding(2.dp)
+                                    .align(Alignment.CenterHorizontally),
+                                style = MaterialTheme.typography.labelMedium
+                            )
+                            TextButton(
+                                modifier = Modifier.padding(8.dp)
+                                    .align(Alignment.CenterHorizontally),
+                                onClick = {
 //                        // assign de message value met de main thread, getNfcId wordt nogsteeds
 //                        // gedaan met de IO thread want dat staat in de functie geschreven
-                            coroutineScope.launch(Dispatchers.IO) {
-                                if (userid != null) {
-                                    ftpDownload(file.name, userid)
-                                }
+                                    coroutineScope.launch(Dispatchers.IO) {
+                                        if (userid != null) {
+                                            ftpDownload(file.name, userid)
+                                        }
+                                    }
+                                })
+                            {
+                                Text(
+                                    modifier = Modifier.padding(4.dp)
+                                        .align(Alignment.CenterVertically),
+                                    text = "Download"
+                                )
                             }
-                        })
-                        {
-                            Text(
-                                modifier = Modifier.padding(4.dp).align(Alignment.CenterVertically),
-                                text ="Download"
-                            )
                         }
                     }
-                }
 
 //                Button(
 //                    onClick = {
@@ -128,8 +130,8 @@ fun DownloadScreen(userid:Long?) {
 //                ) {
 //                    Text(file.name)
 //                }
+                }
             }
-        }
 
+        }
     }
-}

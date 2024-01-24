@@ -31,17 +31,17 @@ actual suspend fun ftpDownload(downloadfile: String, userid: Long) {
         val path = System.getProperty("user.dir")
         //Maak een directory genaamd /.downloads/ aan in /composeApp/
 
-        val dirpath = Context.getFilesDir()("$path/.downloads/")
-        if (!Files.exists(dirpath)) {
-            try {
-                Files.createDirectories(dirpath)
-                println("Directory created")
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        } else {
-            println("Directory already exists")
-        }
+//        val dirpath = Context.getFilesDir("$path/.downloads/")
+//        if (!Files.exists(dirpath)) {
+//            try {
+//                Files.createDirectories(dirpath)
+//                println("Directory created")
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        } else {
+//            println("Directory already exists")
+//        }
 
         client.downloadFile(
             "/$userid/$downloadfile",
@@ -53,27 +53,27 @@ actual suspend fun ftpDownload(downloadfile: String, userid: Long) {
 
 
 
-actual suspend fun downloadFile(context: Context, remoteFile: String, localFileName: String): Boolean {
-    // Prepare content values.
-    val resolver = context.contentResolver
-    val contentValues = ContentValues().apply {
-        put(MediaStore.Downloads.DISPLAY_NAME, localFileName)
-        put(MediaStore.Downloads.MIME_TYPE, "application/octet-stream")
-        put(MediaStore.Downloads.RELATIVE_PATH, "Download/")
-    }
-
-    // Get uri from MediaStore
-    val fileUri: Uri? = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
-
-    // Prepare to write to the file.
-    var outStream: OutputStream? = null
-    if (fileUri != null) {
-        outStream = resolver.openOutputStream(fileUri)
-    }
-
-    return if (outStream != null) {
-        client.retrieveFile(remoteFile, outStream)
-    } else {
-        false
-    }
-}
+//actual suspend fun downloadFile(context: Context, remoteFile: String, localFileName: String): Boolean {
+//    // Prepare content values.
+//    val resolver = context.contentResolver
+//    val contentValues = ContentValues().apply {
+//        put(MediaStore.Downloads.DISPLAY_NAME, localFileName)
+//        put(MediaStore.Downloads.MIME_TYPE, "application/octet-stream")
+//        put(MediaStore.Downloads.RELATIVE_PATH, "Download/")
+//    }
+//
+//    // Get uri from MediaStore
+//    val fileUri: Uri? = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+//
+//    // Prepare to write to the file.
+//    var outStream: OutputStream? = null
+//    if (fileUri != null) {
+//        outStream = resolver.openOutputStream(fileUri)
+//    }
+//
+//    return if (outStream != null) {
+//        client.retrieveFile(remoteFile, outStream)
+//    } else {
+//        false
+//    }
+//}
