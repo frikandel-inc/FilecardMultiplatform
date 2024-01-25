@@ -24,5 +24,8 @@ actual class FTPFile(private val file: FTPFile){
         get() = file.isUnknown
     actual val link: String?
         get() = file.link
+    actual fun open() {
+
+    }
 
 }

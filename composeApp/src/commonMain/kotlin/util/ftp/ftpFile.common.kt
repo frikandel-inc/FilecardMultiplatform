@@ -13,4 +13,5 @@ expect class FTPFile {
     val isSymbolicLink: Boolean
     val isUnknown: Boolean
     val link: String?
+    fun open()
 }

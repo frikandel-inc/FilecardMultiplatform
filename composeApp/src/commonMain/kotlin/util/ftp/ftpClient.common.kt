@@ -1,5 +1,6 @@
 package util.ftp
 
+import java.io.InputStream
 import util.ftp.FTPFile as File
 
 
@@ -12,6 +13,7 @@ expect class FtpClient {
     val isConnected: Boolean
     var privateData: Boolean
     suspend fun downloadFile(remoteFile: String, localFile: String): Boolean
+    suspend fun downloadFileStream(remoteFile: String): InputStream
     suspend fun uploadFile(localFile: String, remoteFile: String): Boolean
     suspend fun mkdir(path: String): Boolean
     suspend fun deleteFile(path: String): Boolean

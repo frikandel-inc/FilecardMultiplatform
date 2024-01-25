@@ -22,7 +22,6 @@ suspend fun ftpFun (userid: Long): ArrayList<FTPFile> {
         client.exit()
         return@withContext files
     }
-
 }
 @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
 expect suspend fun ftpDownload (downloadfile: String, userid: Long) : Unit

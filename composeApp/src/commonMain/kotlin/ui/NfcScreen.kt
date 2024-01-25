@@ -83,6 +83,27 @@ fun NfcScreen(nfcId:Long?):Long? {
             ){
                 Text("Scan NFC")
             }
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+
+                onClick = {
+                    //coroutine wordt gedaan met rememberCoroutineScope om memory leaks tegen te gaan
+                    // wordt gedeclareerd op line 25
+                    coroutineScope.launch {
+                        // assign de message value met de main thread, getNfcId wordt nogsteeds
+                        // gedaan met de IO thread want dat staat in de functie geschreven
+                        withContext(Dispatchers.IO){
+                            message = getNfcId()
+                        }
+                        println("message: "+message)
+                        nfcId2 = 1
+                    }
+
+
+                }
+            ){
+                Text("geen microbit lolol")
+            }
         }
 
     }

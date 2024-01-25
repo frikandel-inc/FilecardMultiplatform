@@ -17,6 +17,7 @@ import util.ftp.FtpClient
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.startup.Initializer
 
 
 var status by mutableStateOf(0L)

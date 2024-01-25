@@ -19,6 +19,7 @@ kotlin {
     jvm("desktop")
     sourceSets {
         androidMain.dependencies {
+            implementation("androidx.startup:startup-runtime:1.1.1")
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
@@ -26,6 +27,8 @@ kotlin {
             implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
             implementation("commons-net:commons-net:3.8.0")
             implementation(libs.androidx.appcompat)
+            implementation("com.louiscad.splitties:splitties-appctx:3.0.0")
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
