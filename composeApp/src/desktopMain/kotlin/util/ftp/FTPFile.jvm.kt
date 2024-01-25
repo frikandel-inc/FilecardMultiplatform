@@ -1,11 +1,15 @@
 package util.ftp
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
+import kotlinx.io.files.Path
 import org.apache.commons.net.ftp.FTPFile
+import java.io.File
+import java.nio.file.Paths
+import java.nio.file.Files
+import java.nio.file.SimpleFileVisitor
 import java.util.*
-import splitties.init.appCtx
+import kotlin.io.FileTreeWalk
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.walk
 
 actual class FTPFile(private val file: FTPFile){
     actual val name: String
@@ -29,22 +33,21 @@ actual class FTPFile(private val file: FTPFile){
     actual val link: String?
         get() = file.link
     actual var isDownloaded: Boolean? = null
+    @OptIn(ExperimentalPathApi::class)
     actual fun downloaded(): Boolean {
-        appCtx.fileList().forEach {
-            if (it == this.name) {
+        val path = System.getProperty("user.dir")
+        //Maak een directory genaamd .downloads aan in /composeApp/
+        val localFileList = ArrayList<String>()
+        File("$path/.downloads/").walkTopDown().forEach { localFileList.add(it.name) }
+        for (filename in localFileList) {
+            println(filename)
+            if (filename == this.name) {
                 return true
             }
         }
         return false
     }
     actual fun open() {
-        val intent = Intent(Intent.ACTION_SEND)
-        val chooser = Intent.createChooser(intent, /* title */ null)
-        try {
-            startActivity(appCtx, chooser, null)
-        } catch (e: ActivityNotFoundException) {
-            // Define what your app should do if no activity can handle the intent.
-        }
 
     }
     actual fun deletefromdevice() {

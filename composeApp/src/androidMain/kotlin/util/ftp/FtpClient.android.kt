@@ -1,34 +1,32 @@
 package util.ftp
 
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
-import org.apache.commons.net.ftp.FTPCmd
-import org.apache.commons.net.ftp.FTPFile
-import util.ftp.FTPFile as File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 
-//dit is gewoon een kopie van FtpClientJvm uit desktopMain
-class FtpClientAndroid : FtpClientCommon {
+actual class FtpClient {
     private val client: FTPClient = FTPClient().apply {
         autodetectUTF8 = true
     }
 
-    override suspend fun connect(host: String, port: Int) {
-        client.setRemoteVerificationEnabled(false)
+    actual suspend fun connect(host: String, port: Int) {
+        client.isRemoteVerificationEnabled = false
         client.connect(host, port)
     }
 
-    override var implicit: Boolean = false
+    actual var implicit: Boolean = false
 
-    override var utf8: Boolean = false
+    actual var utf8: Boolean = false
         set(value) {
             if (value) client.controlEncoding = "UTF-8"
             field = value
         }
 
-    override var passive: Boolean = false
+    actual var passive: Boolean = false
         set(value) {
             if (value) client.enterLocalPassiveMode()
             else client.enterLocalActiveMode()
@@ -37,24 +35,28 @@ class FtpClientAndroid : FtpClientCommon {
 
     private var supportsMlsCommands = false
 
-    override suspend fun login(user: String, password: String) {
+    actual suspend fun login(user: String, password: String) {
         client.login(user, password)
         client.setFileType(FTP.BINARY_FILE_TYPE)
-        supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
+        client.enterLocalPassiveMode()
+//        supportsMlsCommands = client.hasFeature(FTPCmd.MLST)
     }
 
-    override val isConnected: Boolean
+    actual val isConnected: Boolean
         get() = client.isConnected
-    override var privateData: Boolean = false
 
+    actual var privateData: Boolean = false
 
-    override suspend fun downloadFile(remoteFile: String, localFile: String): Boolean{
-        val outputStream = FileOutputStream(localFile)
+    actual suspend fun downloadFile(remoteFile: String, localFile: String): Boolean {
+        var outputStream : OutputStream = FileOutputStream(localFile)
         return client.retrieveFile(remoteFile, outputStream)
 
     }
+    actual suspend fun downloadFileStream(remoteFile: String): InputStream {
+        return client.retrieveFileStream(remoteFile)
+    }
 
-    override suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
+    actual suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
         try {
             val inputStream = FileInputStream(localFile)
             return client.storeFile(remoteFile, inputStream)
@@ -64,35 +66,35 @@ class FtpClientAndroid : FtpClientCommon {
         }
     }
 
-    override suspend fun mkdir(path: String): Boolean {
+    actual suspend fun mkdir(path: String): Boolean {
         return client.makeDirectory(path)
     }
 
-    override suspend fun deleteFile(path: String): Boolean {
+    actual suspend fun deleteFile(path: String): Boolean {
         return client.deleteFile(path)
     }
 
-    override suspend fun deleteDir(path: String): Boolean {
+    actual suspend fun deleteDir(path: String): Boolean {
         return client.removeDirectory(path)
     }
 
-    override suspend fun rename(old: String, new: String): Boolean {
+    actual suspend fun rename(old: String, new: String): Boolean {
         return client.rename(old, new)
     }
 
-    override suspend fun list(path: String?): List<File> {
+    actual suspend fun list(path: String?): ArrayList<FTPFile> {
         return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
     }
 
-    override suspend fun file(path: String): File {
+    actual suspend fun file(path: String): FTPFile {
         if (!supportsMlsCommands) {
             // TODO improve this
             throw IllegalStateException("server does not support MLST command")
         }
-        return File(client.mlistFile(path))
+        return FTPFile(client.mlistFile(path))
     }
 
-    override suspend fun exit(): Boolean {
+    actual suspend fun exit(): Boolean {
         if (!client.logout()) {
             return false
         }
@@ -101,14 +103,20 @@ class FtpClientAndroid : FtpClientCommon {
     }
 
     companion object {
-        internal fun convertFiles(files: Array<FTPFile>): List<File> {
-            val result = ArrayList<File>()
+        internal fun convertFiles(files: Array<org.apache.commons.net.ftp.FTPFile>): ArrayList<FTPFile> {
+            val result = ArrayList<FTPFile>()
             files.forEach {
-                result.add(File(it))
+                result.add(FTPFile(it))
             }
             return result
         }
     }
+}
 
+actual object FtpClientFactory {
+    //maakt een FtpClient aan stuurt hem terug naar de shared code
 
+    actual fun create(): FtpClient {
+        return FtpClient()
+    }
 }

@@ -2,6 +2,7 @@ package com.filecard.multiplatform
 
 import App
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.nfc.Tag
@@ -12,12 +13,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import util.ftp.FtpClientAndroid
+import util.ftp.FtpClient
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.arkivanov.decompose.retainedComponent
-import nav.RootComponent
+import androidx.startup.Initializer
 
 
 var status by mutableStateOf(0L)
@@ -36,11 +36,7 @@ class MainActivity : ComponentActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val ftpclient = FtpClientAndroid()
         super.onCreate(savedInstanceState)
-        val root = retainedComponent {
-            RootComponent(it)
-        }
         pendingIntent =
             PendingIntent.getActivity(
                 this, 0,
@@ -48,7 +44,6 @@ class MainActivity : ComponentActivity() {
                     addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 }, intentFlags()
             )
-
         setContent {
             App()
         }

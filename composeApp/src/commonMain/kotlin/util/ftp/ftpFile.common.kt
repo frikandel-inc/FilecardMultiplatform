@@ -1,4 +1,4 @@
-package util.ftp;
+package util.ftp
 
 import java.util.*
 
@@ -13,5 +13,8 @@ expect class FTPFile {
     val isSymbolicLink: Boolean
     val isUnknown: Boolean
     val link: String?
-
+    var isDownloaded: Boolean?
+    fun downloaded(): Boolean
+    fun open()
+    fun deletefromdevice()
 }
