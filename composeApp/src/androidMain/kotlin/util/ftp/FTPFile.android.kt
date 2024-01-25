@@ -7,7 +7,7 @@ import org.apache.commons.net.ftp.FTPFile
 import java.util.*
 import splitties.init.appCtx
 
-actual class FTPFile(private val file: FTPFile){
+actual class ftpFile(private val file: FTPFile){
     actual val name: String
         get() = file.name
     actual val size: Long
@@ -50,5 +50,18 @@ actual class FTPFile(private val file: FTPFile){
     actual fun deletefromdevice() {
 
     }
+    actual fun getFileFormat(file: util.ftp.ftpFile): String {
+        return ftpFile.getFileFormat(file.name)
+    }
 
+    companion object {
+        fun getFileFormat(filename: String): String {
+            val list = filename.split(".")
+            return if (list.size < 2) {
+                ""
+            } else {
+                list.last().lowercase()
+            }
+        }
+    }
 }

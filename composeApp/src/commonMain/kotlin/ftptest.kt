@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import util.ftp.FtpClient
-import util.ftp.FTPFile as File
+import util.ftp.ftpFile as File
 import kotlinx.coroutines.*
 import androidx.compose.runtime.LaunchedEffect
 

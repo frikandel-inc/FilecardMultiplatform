@@ -6,7 +6,7 @@ import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
-suspend fun ftpFun (userid: Long): ArrayList<FTPFile> {
+suspend fun ftpFun (userid: Long): ArrayList<ftpFile> {
     val counterContext = newSingleThreadContext("CounterContext")
     return withContext(counterContext) {
         val client = FtpClientFactory.create()
@@ -15,7 +15,7 @@ suspend fun ftpFun (userid: Long): ArrayList<FTPFile> {
         client.connect("92.65.40.77", 3134)
         client.login("administrator", "Bitboysxp1")
         println(client.isConnected)
-        val files: ArrayList<FTPFile> = client.list("/$userid/")
+        val files: ArrayList<ftpFile> = client.list("/$userid/")
         println(files.size)
         client.exit()
         return@withContext files

@@ -2,7 +2,6 @@ package util.ftp
 
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
-import org.apache.commons.net.ftp.FTPCmd
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -83,16 +82,16 @@ actual class FtpClient {
         return client.rename(old, new)
     }
 
-    actual suspend fun list(path: String?): ArrayList<FTPFile> {
+    actual suspend fun list(path: String?): ArrayList<ftpFile> {
         return convertFiles(if (supportsMlsCommands) client.mlistDir(path) else client.listFiles(path))
     }
 
-    actual suspend fun file(path: String): FTPFile {
+    actual suspend fun file(path: String): ftpFile {
         if (!supportsMlsCommands) {
             // TODO improve this
             throw IllegalStateException("server does not support MLST command")
         }
-        return FTPFile(client.mlistFile(path))
+        return ftpFile(client.mlistFile(path))
     }
 
     actual suspend fun exit(): Boolean {
@@ -104,10 +103,10 @@ actual class FtpClient {
     }
 
     companion object {
-        internal fun convertFiles(files: Array<org.apache.commons.net.ftp.FTPFile>): ArrayList<FTPFile> {
-            val result = ArrayList<FTPFile>()
+        internal fun convertFiles(files: Array<org.apache.commons.net.ftp.FTPFile>): ArrayList<ftpFile> {
+            val result = ArrayList<ftpFile>()
             files.forEach {
-                result.add(FTPFile(it))
+                result.add(ftpFile(it))
             }
             return result
         }

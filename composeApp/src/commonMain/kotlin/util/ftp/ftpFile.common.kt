@@ -2,7 +2,7 @@ package util.ftp
 
 import java.util.*
 
-expect class FTPFile {
+expect class ftpFile {
     val name: String
     val size: Long
     val user: String
@@ -17,4 +17,5 @@ expect class FTPFile {
     fun downloaded(): Boolean
     fun open()
     fun deletefromdevice()
+    fun getFileFormat(file: util.ftp.ftpFile): String
 }

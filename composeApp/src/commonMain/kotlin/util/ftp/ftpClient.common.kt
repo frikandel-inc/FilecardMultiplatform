@@ -1,7 +1,7 @@
 package util.ftp
 
 import java.io.InputStream
-import util.ftp.FTPFile as File
+import util.ftp.ftpFile as File
 
 
 expect class FtpClient {

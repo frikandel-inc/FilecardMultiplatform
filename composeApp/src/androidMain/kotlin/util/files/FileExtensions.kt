@@ -2,7 +2,7 @@ package util.files
 
 
 import com.filecard.multiplatform.R
-import util.ftp.FTPFile as File
+import util.ftp.ftpFile as File
 
 object FileExtensions {
     private val audioFormats = listOf(
