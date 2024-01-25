@@ -1,4 +1,5 @@
 [versions]
+accompanistPermissions = "0.32.0"
 agp = "8.1.4"
 android-compileSdk = "34"
 android-minSdk = "24"
@@ -10,16 +11,29 @@ androidx-core-ktx = "1.12.0"
 androidx-espresso-core = "3.5.1"
 androidx-material = "1.10.0"
 androidx-test-junit = "1.1.5"
+commons-net-commonsNet = "3.8.0"
 compose = "1.5.4"
 compose-compiler = "1.5.6"
 compose-plugin = "1.5.11"
 coroutines = "1.7.3"
+jSerialComm = "[2.0.0,3.0.0)"
 junit = "4.13.2"
 kotlin = "1.9.21"
+kotlinxIo = "0.1.16"
+kotlinxIoCore = "0.3.0"
 ktor = "2.3.7"
+material3WindowSizeClassMultiplatform = "0.5.0-alpha03"
+precompose = "1.5.10"
+skikoAwt = "0.7.89.1"
+splittiesAppctx = "3.0.0"
+startupRuntime = "1.1.1"
 
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
+commons-net-commons-net = { module = "commons-net:commons-net", version.ref = "commons-net-commonsNet" }
+jSerialComm = { module = "com.fazecast:jSerialComm", version.ref = "jSerialComm" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -35,11 +49,18 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+kotlinx-io = { module = "org.jetbrains.kotlinx:kotlinx-io", version.ref = "kotlinxIo" }
+kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIoCore" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
+skiko-awt = { module = "org.jetbrains.skiko:skiko-awt", version.ref = "skikoAwt" }
+splitties-appctx = { module = "com.louiscad.splitties:splitties-appctx", version.ref = "splittiesAppctx" }
 
 
 

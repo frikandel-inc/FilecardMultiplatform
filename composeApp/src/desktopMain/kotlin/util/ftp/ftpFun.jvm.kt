@@ -16,7 +16,7 @@ actual suspend fun ftpDownload(downloadfile: String, userid: Long) {
         val path = System.getProperty("user.dir")
         //Maak een directory genaamd .downloads aan in /composeApp/
 
-        val dirpath = Paths.get("$path/.downloads/")
+        val dirpath = Paths.get("${path}/.downloads/")
 
         if (!Files.exists(dirpath)) {
             try {

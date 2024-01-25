@@ -36,7 +36,6 @@ class MainActivity : ComponentActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val ftpclient = FtpClient()
         super.onCreate(savedInstanceState)
         pendingIntent =
             PendingIntent.getActivity(

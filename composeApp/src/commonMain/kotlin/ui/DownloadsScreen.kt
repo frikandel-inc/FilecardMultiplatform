@@ -1,39 +1,24 @@
 package ui
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import util.ftp.FTPFile
 import util.ftp.ftpDownload
 import util.ftp.ftpFun
+import util.ftp.FTPFile as ftpFile
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun DownloadScreen(userid:Long?) {
-    var filelist by remember { mutableStateOf(arrayListOf<FTPFile>()) }
+    var filelist by remember { mutableStateOf(arrayListOf<ftpFile>()) }
     val coroutineScope = rememberCoroutineScope()
 //    var userid : Long = 1
 //        val counterContext = newSingleThreadContext("CounterContext")
@@ -44,26 +29,19 @@ fun DownloadScreen(userid:Long?) {
             Button(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 onClick = {
-                    // assign de message value met de main thread, getNfcId wordt nogsteeds
-                    // gedaan met de IO thread want dat staat in de functie geschreven
+                    // assign het message value met de main thread, getNfcId wordt nog steeds
+                    // gedaan met de IO-thread want dat staat in de functie geschreven
                     if (userid == null) {
 
-                        println("userid-download:" + userid)
+                        println("userid-download: $userid")
                     } else {
                         coroutineScope.launch(Dispatchers.IO) {
-                            val ftpfilelist: ArrayList<FTPFile> = ftpFun(userid)
+                            val ftpFileList: ArrayList<ftpFile> = ftpFun(userid)
                             withContext(Dispatchers.Default) {
-                                filelist = ftpfilelist
+                                filelist = ftpFileList
                             }
                         }
                     }
-//                coroutineScope.launch() {
-//                    val ftpfilelist : ArrayList<FTPFile> = ftpFun(userid)
-//                    withContext(Dispatchers.Default) {
-//                        filelist = ftpfilelist
-//                    }
-//                }
-
                 }
             ) {
                 Text("Connect to File Server")
@@ -83,6 +61,21 @@ fun DownloadScreen(userid:Long?) {
                 modifier = Modifier.fillMaxWidth().animateContentSize()
             ) {
                 for (file in filelist) {
+                    file.isDownloaded = file.run { downloaded() }
+                    val size : String
+                    if (file.size > 1000000000) {
+                        size = "${file.size / 1000} GB"
+                    }
+                    else  if (file.size > 1000000){
+                        size = "${file.size / 1000} MB"
+                    }
+                    else if (file.size > 1000){
+                        size = "${file.size / 1000} KB"
+                    }
+                    else {
+                        size = "${file.size} B"
+                    }
+
                     item {
                         Card {
                             Text(
@@ -92,29 +85,62 @@ fun DownloadScreen(userid:Long?) {
                                 style = MaterialTheme.typography.bodyLarge
                             )
                             Text(
-                                text = file.size.toString() + " bytes",
+                                text = size,
                                 modifier = Modifier.padding(2.dp)
                                     .align(Alignment.CenterHorizontally),
                                 style = MaterialTheme.typography.labelMedium
                             )
-                            TextButton(
-                                modifier = Modifier.padding(8.dp)
-                                    .align(Alignment.CenterHorizontally),
-                                onClick = {
-//                        // assign de message value met de main thread, getNfcId wordt nogsteeds
-//                        // gedaan met de IO thread want dat staat in de functie geschreven
-                                    coroutineScope.launch(Dispatchers.IO) {
-                                        if (userid != null) {
-                                            ftpDownload(file.name, userid)
-                                        }
-                                    }
-                                })
-                            {
-                                Text(
+                            if (file.isDownloaded == true) {
+                                TextButton(
                                     modifier = Modifier.padding(4.dp)
-                                        .align(Alignment.CenterVertically),
-                                    text = "Download"
-                                )
+                                        .align(Alignment.CenterHorizontally),
+                                    onClick = {
+                                        coroutineScope.launch(Dispatchers.IO) {
+                                            file.open()
+                                        }
+                                    })
+                                {
+                                    Text(
+                                        modifier = Modifier.padding(2.dp)
+                                            .align(Alignment.CenterVertically),
+                                        text = "Open"
+                                    )
+                                }
+                                TextButton(
+                                    modifier = Modifier.padding(4.dp)
+                                        .align(Alignment.CenterHorizontally),
+                                    onClick = {
+                                        coroutineScope.launch(Dispatchers.IO) {
+                                            file.deletefromdevice()
+                                        }
+                                    })
+                                {
+                                    Text(
+                                        modifier = Modifier.padding(2.dp)
+                                            .align(Alignment.CenterVertically),
+                                        text = "Delete"
+                                    )
+                                }
+                            }
+                            else
+                            {
+                                TextButton(
+                                    modifier = Modifier.padding(8.dp)
+                                        .align(Alignment.CenterHorizontally),
+                                    onClick = {
+                                        coroutineScope.launch(Dispatchers.IO) {
+                                            if (userid != null) {
+                                                ftpDownload(file.name, userid)
+                                            }
+                                        }
+                                    })
+                                {
+                                    Text(
+                                        modifier = Modifier.padding(4.dp)
+                                            .align(Alignment.CenterVertically),
+                                        text = "Download"
+                                    )
+                                }
                             }
                         }
                     }

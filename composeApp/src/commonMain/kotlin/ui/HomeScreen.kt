@@ -20,7 +20,7 @@ fun HomeScreen(){
     Column (modifier = Modifier.padding(16.dp).fillMaxWidth()){
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "\nWelkom bij de filcard app",
+            text = "\nWelkom bij de filecard app",
             style = MaterialTheme.typography.titleLarge,
         )
         Text(

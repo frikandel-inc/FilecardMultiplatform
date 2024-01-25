@@ -2,7 +2,6 @@ package util.ftp
 
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
-import org.apache.commons.net.ftp.FTPCmd
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream

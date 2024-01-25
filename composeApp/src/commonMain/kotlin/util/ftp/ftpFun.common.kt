@@ -4,8 +4,6 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
-import java.nio.file.Files
-import java.nio.file.Paths
 
 @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
 suspend fun ftpFun (userid: Long): ArrayList<FTPFile> {
@@ -24,4 +22,4 @@ suspend fun ftpFun (userid: Long): ArrayList<FTPFile> {
     }
 }
 @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
-expect suspend fun ftpDownload (downloadfile: String, userid: Long) : Unit
+expect suspend fun ftpDownload (downloadfile: String, userid: Long)

@@ -2,21 +2,12 @@ package util.ftp
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
-import java.io.*
-import java.nio.file.Files
-import android.content.ContentValues
-import android.net.Uri
-import android.provider.MediaStore
-import io.ktor.utils.io.core.*
 import splitties.init.appCtx
-import java.io.OutputStream
 import kotlin.io.use
 
 

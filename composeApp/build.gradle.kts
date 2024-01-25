@@ -19,15 +19,15 @@ kotlin {
     jvm("desktop")
     sourceSets {
         androidMain.dependencies {
-            implementation("androidx.startup:startup-runtime:1.1.1")
+            implementation(libs.androidx.startup.runtime)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
-            implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
-            implementation("commons-net:commons-net:3.8.0")
+            implementation (libs.accompanist.permissions)
+            implementation(libs.commons.net.commons.net)
             implementation(libs.androidx.appcompat)
-            implementation("com.louiscad.splitties:splitties-appctx:3.0.0")
+            implementation(libs.splitties.appctx)
 
         }
         commonMain.dependencies {
@@ -40,23 +40,22 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.coroutines.core)
-            implementation("io.ktor:ktor-client-logging:2.3.7")
-            implementation("org.jetbrains.kotlinx:kotlinx-io:0.1.16")
-            implementation("io.ktor:ktor-client-auth:2.3.7")
-            implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.3.0")
-            implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0-alpha03")
+            implementation(libs.ktor.client.logging)
+            implementation(libs.kotlinx.io)
+            implementation(libs.ktor.client.auth)
+            implementation(libs.kotlinx.io.core)
+            implementation (libs.kotlinx.coroutines.core)
             api(compose.foundation)
             api(compose.animation)
-            api("moe.tlaster:precompose:1.5.10")
+            api(libs.precompose)
         }
         val desktopMain by getting
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
-            implementation("commons-net:commons-net:3.8.0")
-            implementation("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
-            implementation("org.jetbrains.skiko:skiko-awt:0.6.7")
+            implementation(libs.commons.net.commons.net)
+            implementation(libs.jSerialComm)
+            implementation(libs.skiko.awt)
         }
     }
 }

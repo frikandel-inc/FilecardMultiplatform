@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPCmd
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 
 
 actual class FtpClient {
@@ -50,6 +51,10 @@ actual class FtpClient {
         val outputStream = FileOutputStream(localFile)
         return client.retrieveFile(remoteFile, outputStream)
 
+    }
+
+    actual suspend fun downloadFileStream(remoteFile: String): InputStream {
+        return client.retrieveFileStream(remoteFile)
     }
 
     actual suspend fun uploadFile(localFile: String, remoteFile: String): Boolean {
