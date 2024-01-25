@@ -1,5 +1,6 @@
 package ui
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -75,12 +76,8 @@ fun DownloadScreen(userid:Long?) {
                     size = "${file.size} B"
                 }
 
-                item {
-                    var showContent by remember { mutableStateOf(false) }
-                    Box(modifier = Modifier.clickable { /* Handle click event here */ }) {
-                        Button(onClick = { showContent = !showContent }) { Text(file.name) }
-                        AnimatedVisibility(showContent) {
-                            Card {
+                item() {
+                            Card(modifier = Modifier.animateContentSize()) {
                                 Text(
                                     text = file.name,
                                     modifier = Modifier.padding(4.dp)
@@ -100,6 +97,7 @@ fun DownloadScreen(userid:Long?) {
                                         onClick = {
                                             coroutineScope.launch(Dispatchers.IO) {
                                                 file.open()
+                                                
                                             }
                                         })
                                     {
@@ -167,5 +165,4 @@ fun DownloadScreen(userid:Long?) {
             }
 
         }
-    }
-}
+

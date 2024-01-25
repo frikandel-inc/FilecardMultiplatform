@@ -92,10 +92,12 @@ fun NfcScreen(nfcId:Long?):Long? {
                     coroutineScope.launch {
                         // assign de message value met de main thread, getNfcId wordt nogsteeds
                         // gedaan met de IO thread want dat staat in de functie geschreven
-                        withContext(Dispatchers.IO){
-                            message = getNfcId()
-                        }
+//                        withContext(Dispatchers.IO){
+//                            message = getNfcId()
+//                        }
                         println("message: "+message)
+                        message = 1.toString()
+
                         nfcId2 = 1
                     }
 
